@@ -11,6 +11,7 @@ import Models.Categories;
 import Models.CategoriesDao;
 import Models.Customers;
 import Models.CustomersDao;
+import Models.DynamicCb;
 import Models.Employees;
 import Models.EmployeesDao;
 import static Models.EmployeesDao.full_name_user;
@@ -1872,7 +1873,7 @@ public class SystemView extends javax.swing.JFrame {
     private javax.swing.JPanel cabecera;
     public javax.swing.JComboBox<String> cb_colaborator_rol;
     public javax.swing.JComboBox<Object> cb_product_category;
-    public javax.swing.JComboBox<Object> cb_purchase_proveedor;
+    public javax.swing.JComboBox<DynamicCb> cb_purchase_proveedor;
     public javax.swing.JComboBox<String> cb_suplimers_ciudad;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

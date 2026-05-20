@@ -25,7 +25,6 @@ public class SuppliersDao {
         this.views = views;
     }
 
-    
     //Registrar Proveedor
     public boolean registerSuppliersQuery(Suppliers suppliers) {
         String query = "INSERT INTO suppliers(name,description,address,telephone,email,"
@@ -35,7 +34,7 @@ public class SuppliersDao {
         try {
             conn = cn.getConnection();
             pst = conn.prepareStatement(query);
-            
+
             pst.setString(1, suppliers.getName());
             pst.setString(2, suppliers.getDescription());
             pst.setString(3, suppliers.getAddress());
@@ -87,16 +86,15 @@ public class SuppliersDao {
         }
         return list_suppliers;
     }
-    
+
     //Modificar Proveedor
-    public boolean updateSuppliersQuery(Suppliers suppliers){
-        String query = "UPDATE suppliers SET name =?, description=?, address=?,"+
-                "telephone=?,email=?,city=?,updated=? WHERE id=?";
-        
-        
+    public boolean updateSuppliersQuery(Suppliers suppliers) {
+        String query = "UPDATE suppliers SET name =?, description=?, address=?,"
+                + "telephone=?,email=?,city=?,updated=? WHERE id=?";
+
         Timestamp dataTime = new Timestamp(new Date().getTime());
-        try{
-            conn=cn.getConnection();
+        try {
+            conn = cn.getConnection();
             pst = conn.prepareStatement(query);
             pst.setString(1, suppliers.getName());
             pst.setString(2, suppliers.getDescription());
@@ -106,47 +104,50 @@ public class SuppliersDao {
             pst.setString(6, suppliers.getCity());
             pst.setTimestamp(7, dataTime);
             pst.setInt(8, suppliers.getId());
-            
+
             pst.execute();
             return true;
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null,"Error al modiificar datos del proveedor"+ e);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al modiificar datos del proveedor" + e);
             return false;
         }
     }
-    
+
     //Eliminar Proveedor
-    public boolean deleteSuppliersQuery(int id){
-        String query = "DELETE FROM suppliers WHERE id="+id;
+    public boolean deleteSuppliersQuery(int id) {
+        String query = "DELETE FROM suppliers WHERE id=" + id;
         try {
             conn = cn.getConnection();
-            pst= conn.prepareStatement(query);
+            pst = conn.prepareStatement(query);
             pst.execute();
             return true;
-            
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Error al eliminar Proveedor"+e);
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al eliminar Proveedor" + e);
             return false;
         }
     }
-    
+
     //Refrescar proveedores en Combobox compras
-    public void refrescarSuppliersQuery(){
-     views.cb_purchase_proveedor.removeAllItems();
-     String query = "Select name from suppliers order by name ASC";
-     
-     try
-     {
-         conn = cn.getConnection();
-         pst = conn.prepareStatement(query);
-         rs=pst.executeQuery();
-         
-         while(rs.next()){
-             views.cb_purchase_proveedor.addItem(rs.getString("name"));
-         }
-     }catch (SQLException e) {
+    public void refrescarSuppliersQuery() {
+        views.cb_purchase_proveedor.removeAllItems();
+        String query = "SELECT id, name FROM suppliers ORDER BY id ASC";
+
+        try {
+            conn = cn.getConnection();
+            pst = conn.prepareStatement(query);
+            rs = pst.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+
+                // 2. Insertamos el objeto estructurado completo en el JComboBox
+                views.cb_purchase_proveedor.addItem(new DynamicCb(id, name));
+            }
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al cargar el proveedor" + e.getMessage());
         }
     }
-    
+
 }

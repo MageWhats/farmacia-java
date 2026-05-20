@@ -11,7 +11,6 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import Views.SystemView;
 
-
 public class CategoriesDao {
     //Instanciar conexion BD
 
@@ -20,8 +19,8 @@ public class CategoriesDao {
     PreparedStatement pst;
     ResultSet rs;
     SystemView views;
-    
-        // Constructor para recibir y asignar la vista
+
+    // Constructor para recibir y asignar la vista
     public CategoriesDao(SystemView views) {
         this.views = views;
     }
@@ -105,22 +104,28 @@ public class CategoriesDao {
             return false;
         }
     }
-    
+
     //Refrescar Categoria en el combobox de productos
-    public void refrescarCategoriesQuery(){
+    public void refrescarCategoriesQuery() {
         views.cb_product_category.removeAllItems();
-        String query = "Select name from categories order by name ASC";
+        String query = "Select id, name from categories order by id ASC";
         try {
             conn = cn.getConnection();
             pst = conn.prepareStatement(query);
             rs = pst.executeQuery();
-            
-            while (rs.next()){
-                views.cb_product_category.addItem(rs.getString("name"));
+
+            while (rs.next()) {
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String name = rs.getString("name");
+
+                    // 2. Insertamos el objeto estructurado completo en el JComboBox
+                    views.cb_product_category.addItem(new DynamicCb(id, name));
+                }
             }
-            
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null,"Error al cargar categorias"+e.getMessage());
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al cargar categorias" + e.getMessage());
         }
     }
 }

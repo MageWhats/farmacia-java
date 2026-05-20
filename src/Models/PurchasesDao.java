@@ -45,7 +45,7 @@ public class PurchasesDao {
     //Registrar detalles de la compra
     public boolean registerPurchaseDetailQuery(int purchase_id, double purchase_price, int purchase_amount, double purchase_subtotal, int product_id) {
 
-        String query = "INSERT INTO purchase_details (purchase_id, purchase_price, purchase_amount, purchase_subtotal,purchase_id)VALUES(?,?,?,?,?)";
+        String query = "INSERT INTO purchase_details (purchase_id, purchase_price, purchase_amount, purchase_subtotal, product_id)VALUES(?,?,?,?,?)";
         Timestamp dateTime = new Timestamp(new Date().getTime());
 
         try {
@@ -56,6 +56,7 @@ public class PurchasesDao {
             pst.setInt(3, purchase_amount);
             pst.setDouble(4, purchase_subtotal);
             pst.setInt(5, product_id);
+            
 
             pst.execute();
             return true;
@@ -85,7 +86,7 @@ public class PurchasesDao {
     }
 
     //Listar todas las compras realizadas
-    public List lisAllPurchasesQuery() {
+    public List listAllPurchasesQuery() {
         List<Purchases> list_purchases = new ArrayList();
         String query = "select pu.*, su.name as supplier_name from purchases pu, suppliers su where pu.supplier_id= su.id order by pu.id asc";
         try {

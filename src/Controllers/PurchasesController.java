@@ -10,6 +10,7 @@ import Models.Purchases;
 import Models.PurchasesDao;
 import Models.Suppliers;
 import Models.SuppliersDao;
+import Views.Print;
 import Views.SystemView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,7 +29,7 @@ public class PurchasesController implements ActionListener, MouseListener, KeyLi
     private PurchasesDao purchaseDao;
     private SuppliersDao supplierDao;
     private SystemView views;
-    Products products = new Products();
+    Products product = new Products();
     ProductDao productDao = new ProductDao();
     String rol = rol_user;
     private int getIdSupplier = 0;
@@ -49,98 +50,133 @@ public class PurchasesController implements ActionListener, MouseListener, KeyLi
         //Comprar
         this.views.btn_purchase_confirm.addActionListener(this);
         getSupplierName();
-        
+        //Eliminar
+        this.views.btn_purchase_remove.addActionListener(this);
+        //nuevo
+        this.views.btn_purchase_new.addActionListener(this);
+        //label compras
+        this.views.jLabelPurchases.addMouseListener(this);
+        //label reports
+        this.views.jLabelReports.addMouseListener(this);
+
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-       if (e.getSource() == views.btn_purchase_add_product_buy) {
-    
-    // 1. Obtener el índice seleccionado en el ComboBox
-    int selectedIndex = views.cb_purchase_proveedor.getSelectedIndex();
+        if (e.getSource() == views.btn_purchase_add_product_buy) {
 
-    // 2. Validar que realmente haya un elemento seleccionado (índice 0 o superior)
-    if (selectedIndex >= 0) {
-        
-        // 3. Extraer el objeto real directamente desde el modelo del ComboBox
-        Object selectSupplier = views.cb_purchase_proveedor.getItemAt(selectedIndex);
-        
-        // Impresiones de depuración seguras en consola
-        if (selectSupplier != null) {
-            System.out.println("TIPO DE OBJETO DETECTADO: " + selectSupplier.getClass().getName());
-            System.out.println("VALOR REAL DENTRO: " + selectSupplier.toString());
-        }
+            // 1. Obtener el índice seleccionado en el ComboBox
+            int selectedIndex = views.cb_purchase_proveedor.getSelectedIndex();
 
-        // 4. Validar si el objeto recuperado es una instancia de tu clase DynamicCb
-        if (selectSupplier instanceof DynamicCb) {
-            DynamicCb supplier_cb = (DynamicCb) selectSupplier;
-            int supplier_id = supplier_cb.getId();
-            
-            if (getIdSupplier == 0) {
-                getIdSupplier = supplier_id;
-            } else {
-                if (getIdSupplier != supplier_id) {
-                    JOptionPane.showMessageDialog(null, "No puede realizar una misma compra con varios proveedores");
-                    return;
+            // 2. Validar que realmente haya un elemento seleccionado (índice 0 o superior)
+            if (selectedIndex >= 0) {
+
+                // 3. Extraer el objeto real directamente desde el modelo del ComboBox
+                Object selectSupplier = views.cb_purchase_proveedor.getItemAt(selectedIndex);
+
+                // Impresiones de depuración seguras en consola
+                if (selectSupplier != null) {
+                    System.out.println("TIPO DE OBJETO DETECTADO: " + selectSupplier.getClass().getName());
+                    System.out.println("VALOR REAL DENTRO: " + selectSupplier.toString());
                 }
-            }
 
-            int amount = Integer.parseInt(views.txt_purchase_cantidad.getText());
-            String product_name = views.txt_purchase_productName.getText();
-            double price = Double.parseDouble(views.txt_purchase_precioCompra.getText());
-            int purchase_id = Integer.parseInt(views.txt_purchase_id.getText());
+                // 4. Validar si el objeto recuperado es una instancia de tu clase DynamicCb
+                if (selectSupplier instanceof DynamicCb) {
+                    DynamicCb supplier_cb = (DynamicCb) selectSupplier;
+                    int supplier_id = supplier_cb.getId();
 
-            String supplier_name = supplier_cb.getName();
-
-            if (amount > 0) {
-                temp = (DefaultTableModel) views.tb_purchases.getModel();
-                for (int i = 0; i < views.tb_purchases.getRowCount(); i++) {
-                    if (views.tb_purchases.getValueAt(i, 1).equals(views.txt_purchase_productName.getText())) {
-                        JOptionPane.showMessageDialog(null, "El producto ya esta registrado en la tabla de compras");
-                        return;
+                    if (getIdSupplier == 0) {
+                        getIdSupplier = supplier_id;
+                    } else {
+                        if (getIdSupplier != supplier_id) {
+                            JOptionPane.showMessageDialog(null, "No puede realizar una misma compra con varios proveedores");
+                            return;
+                        }
                     }
+
+                    int amount = Integer.parseInt(views.txt_purchase_cantidad.getText());
+                    String product_name = views.txt_purchase_productName.getText();
+                    double price = Double.parseDouble(views.txt_purchase_precioCompra.getText());
+                    int purchase_id = Integer.parseInt(views.txt_purchase_id.getText());
+
+                    String supplier_name = supplier_cb.getName();
+
+                    if (amount > 0) {
+                        temp = (DefaultTableModel) views.tb_purchases.getModel();
+                        for (int i = 0; i < views.tb_purchases.getRowCount(); i++) {
+                            if (views.tb_purchases.getValueAt(i, 1).equals(views.txt_purchase_productName.getText())) {
+                                JOptionPane.showMessageDialog(null, "El producto ya esta registrado en la tabla de compras");
+                                return;
+                            }
+                        }
+
+                        ArrayList list = new ArrayList();
+                        item = 1;
+                        list.add(item);
+                        list.add(purchase_id);
+                        list.add(product_name);
+                        list.add(amount);
+                        list.add(price);
+                        list.add(amount * price);
+                        list.add(supplier_name);
+
+                        Object[] obj = new Object[6];
+                        obj[0] = list.get(1);
+                        obj[1] = list.get(2);
+                        obj[2] = list.get(3);
+                        obj[3] = list.get(4);
+                        obj[4] = list.get(5);
+                        obj[5] = list.get(6);
+
+                        temp.addRow(obj);
+                        views.tb_purchases.setModel(temp);
+                        cleanFieldsPurchases();
+                        views.cb_purchase_proveedor.setEditable(false);
+                        views.txt_purchase_productCode.requestFocus();
+                        calculatePurchase();
+                    }
+                } else {
+                    // Se ejecuta si el objeto dentro del ComboBox no es un DynamicCb
+                    JOptionPane.showMessageDialog(null, "Por favor, seleccione un proveedor valido");
                 }
-
-                ArrayList list = new ArrayList();
-                item = 1;
-                list.add(item);
-                list.add(purchase_id);
-                list.add(product_name);
-                list.add(amount);
-                list.add(price);
-                list.add(amount * price);
-                list.add(supplier_name);
-
-                Object[] obj = new Object[6];
-                obj[0] = list.get(1);
-                obj[1] = list.get(2);
-                obj[2] = list.get(3);
-                obj[3] = list.get(4);
-                obj[4] = list.get(5);
-                obj[5] = list.get(6);
-
-                temp.addRow(obj);
-                views.tb_purchases.setModel(temp);
-                cleanFieldsPurchases();
-                views.cb_purchase_proveedor.setEditable(false);
-                views.txt_purchase_productCode.requestFocus();
-                caculatePurchase();
+            } else {
+                // Se ejecuta si el ComboBox está vacío o no hay nada seleccionado (índice -1)
+                JOptionPane.showMessageDialog(null, "Por favor, seleccione un proveedor de la lista");
             }
-        } else {
-            // Se ejecuta si el objeto dentro del ComboBox no es un DynamicCb
-            JOptionPane.showMessageDialog(null, "Por favor, seleccione un proveedor valido");
-        }
-    } else {
-        // Se ejecuta si el ComboBox está vacío o no hay nada seleccionado (índice -1)
-        JOptionPane.showMessageDialog(null, "Por favor, seleccione un proveedor de la lista");
-    }
-}
- else if (e.getSource() == views.btn_purchase_confirm) {
+        } else if (e.getSource() == views.btn_purchase_confirm) {
             insertPurchase();
+        } else if (e.getSource() == views.btn_purchase_remove) {
+            model = (DefaultTableModel) views.tb_purchases.getModel();
+            model.removeRow(views.tb_purchases.getSelectedRow());
+            calculatePurchase();
+            views.txt_purchase_productCode.requestFocus();
+        }else if(e.getSource()==views.btn_purchase_new){
+           cleanTableTemp();
+           cleanFieldsPurchases();
         }
     }
 
-    //
+    
+    
+    //listar compras en la tabla de reportes
+    public void listAllPurchases(){
+      if(rol.equals("Administrador")||rol.equals("Auxiliar")){
+          List<Purchases>list=purchaseDao.listAllPurchasesQuery();
+          model = (DefaultTableModel) views.tb_reports_purchase.getModel();
+          Object[] row = new Object[4];
+          for(int i =0; i< list.size(); i++){
+              row[0] = list.get(i).getId();
+              row[1] = list.get(i).getSupplier_name_product();
+              row[2] = list.get(i).getTotal();
+              row[3] = list.get(i).getCreated();
+              model.addRow(row);
+          }
+          views.tb_reports_purchase.setModel(model);
+      }  
+        
+    }
+    
+    //Limpiar la tabla de agregar productos
     public void cleanTableTemp() {
         for (int i = 0; i < temp.getRowCount(); i++) {
             temp.removeRow(i);
@@ -149,7 +185,7 @@ public class PurchasesController implements ActionListener, MouseListener, KeyLi
 
     }
 
-    //
+    //Inserta la compra BD
     private void insertPurchase() {
         double total = Double.parseDouble(views.txt_purchase_totalPagar.getText());
         int employee_id = id_user;
@@ -161,11 +197,16 @@ public class PurchasesController implements ActionListener, MouseListener, KeyLi
                 double purchase_price = Double.parseDouble(views.tb_purchases.getValueAt(i, 3).toString());
                 double purchase_subTotal = purchase_price * purchase_amount;
                 purchaseDao.registerPurchaseDetailQuery(purchase_id, purchase_price, purchase_amount, purchase_subTotal, product_id);
-
+                product= productDao.searchId(product_id);
+                int amount = product.getProduct_quantity()+purchase_amount;
+                productDao.updateStockQuery(amount, product_id);
             }
             cleanTableTemp();
             JOptionPane.showMessageDialog(null, "Compra generada con exito");
             cleanFieldsPurchases();
+            Print print = new Print(purchase_id);
+            print.setVisible(true);
+            
         }
 
     }
@@ -182,7 +223,7 @@ public class PurchasesController implements ActionListener, MouseListener, KeyLi
     }
 
     //valor precio total compra
-    public void caculatePurchase() {
+    public void calculatePurchase() {
 
         double total = 0;
         int numRow = views.tb_purchases.getRowCount();
@@ -192,20 +233,42 @@ public class PurchasesController implements ActionListener, MouseListener, KeyLi
         views.txt_purchase_totalPagar.setText("" + total);
 
     }
-    
-        //Mostrar nombre de los proveedores
-    public void getSupplierName(){
+
+    //Mostrar nombre de los proveedores
+    public void getSupplierName() {
         views.cb_purchase_proveedor.removeAllItems();
-        List<Suppliers> list= supplierDao.listSuppliersQuery((views.txt_suplimers_search.getText()));
-        for (int i = 0 ; i< list.size();i++){
+        List<Suppliers> list = supplierDao.listSuppliersQuery((views.txt_suplimers_search.getText()));
+        for (int i = 0; i < list.size(); i++) {
             int id = list.get(i).getId();
             String name = list.get(i).getName();
             views.cb_purchase_proveedor.addItem(new DynamicCb(id, name));
         }
     }
+    
+    //Limpiar tabla reportes
+    public void cleanTable(){
+        for(int i=0; i<model.getRowCount();i++){
+            model.removeRow(i);
+            i=i-1;
+        }
+    }
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        if(e.getSource()==views.jLabelPurchases){
+            if(rol.equals("Administrador")){
+                views.jTabbedPane1.setSelectedIndex(1);
+                cleanTableTemp();
+            }else{
+                views.jTabbedPane1.setEnabledAt(1, false);
+                views.jLabelPurchases.setEnabled(false);
+                JOptionPane.showMessageDialog(null, "No tienes permiso de administrador");
+            }
+        }else if(e.getSource()==views.jLabelReports){
+            views.jTabbedPane1.setSelectedIndex(7);
+            cleanTable();
+            listAllPurchases();
+        }
     }
 
     @Override
@@ -236,9 +299,9 @@ public class PurchasesController implements ActionListener, MouseListener, KeyLi
                     JOptionPane.showMessageDialog(null, "Ingrese el codigo del producto");
                 } else {
                     int id = Integer.parseInt(views.txt_purchase_productCode.getText());
-                    products = productDao.searchCode(id);
-                    views.txt_purchase_productName.setText("" + products.getName());
-                    views.txt_purchase_id.setText("" + products.getId());
+                    product = productDao.searchCode(id);
+                    views.txt_purchase_productName.setText("" + product.getName());
+                    views.txt_purchase_id.setText("" + product.getId());
                     views.txt_purchase_cantidad.requestFocus();
 
                 }
