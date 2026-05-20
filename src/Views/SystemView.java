@@ -197,7 +197,7 @@ public class SystemView extends javax.swing.JFrame {
         txt_sales_cantidad = new javax.swing.JTextField();
         txt_sales_identifyCliente = new javax.swing.JTextField();
         txt_sales_totalPagar = new javax.swing.JTextField();
-        txt_sales_id = new javax.swing.JTextField();
+        txt_sales_product_id = new javax.swing.JTextField();
         txt_sales_price = new javax.swing.JTextField();
         txt_sales_subTotal = new javax.swing.JTextField();
         txt_sales_stock = new javax.swing.JTextField();
@@ -923,8 +923,8 @@ public class SystemView extends javax.swing.JFrame {
         txt_sales_totalPagar.setEditable(false);
         txt_sales_totalPagar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        txt_sales_id.setEditable(false);
-        txt_sales_id.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txt_sales_product_id.setEditable(false);
+        txt_sales_product_id.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         txt_sales_price.setEditable(false);
         txt_sales_price.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -990,7 +990,7 @@ public class SystemView extends javax.swing.JFrame {
                     .addComponent(txt_sales_stock, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_sales_subTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_sales_price, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_sales_id, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_sales_product_id, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(55, 55, 55)
                 .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btn_sales_add, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1005,7 +1005,7 @@ public class SystemView extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txt_sales_id, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_sales_product_id, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btn_sales_add, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel17Layout.createSequentialGroup()
                         .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -2033,12 +2033,12 @@ public class SystemView extends javax.swing.JFrame {
     public javax.swing.JTextField txt_purchase_subTotal;
     public javax.swing.JTextField txt_purchase_totalPagar;
     public javax.swing.JTextField txt_sales_cantidad;
-    public javax.swing.JTextField txt_sales_id;
     public javax.swing.JTextField txt_sales_identifyCliente;
     public javax.swing.JTextField txt_sales_nameCliente;
     public javax.swing.JTextField txt_sales_nameProduct;
     public javax.swing.JTextField txt_sales_price;
     public javax.swing.JTextField txt_sales_productCode;
+    public javax.swing.JTextField txt_sales_product_id;
     public javax.swing.JTextField txt_sales_stock;
     public javax.swing.JTextField txt_sales_subTotal;
     public javax.swing.JTextField txt_sales_totalPagar;

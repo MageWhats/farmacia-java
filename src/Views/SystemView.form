@@ -1498,7 +1498,7 @@
                               <Component id="txt_sales_stock" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
                               <Component id="txt_sales_subTotal" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
                               <Component id="txt_sales_price" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
-                              <Component id="txt_sales_id" alignment="1" min="-2" pref="160" max="-2" attributes="0"/>
+                              <Component id="txt_sales_product_id" alignment="1" min="-2" pref="160" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -1517,7 +1517,7 @@
                           <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="txt_sales_id" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                  <Component id="txt_sales_product_id" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                                   <Component id="btn_sales_add" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
@@ -1697,7 +1697,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txt_sales_id">
+                <Component class="javax.swing.JTextField" name="txt_sales_product_id">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
