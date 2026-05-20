@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package Views;
 
 import Models.Purchases;
@@ -53,10 +50,18 @@ public class Print extends javax.swing.JFrame {
     public void calculatePurchase() {
         double total = 0;
         int numRow = tb_print_purchases_detail.getRowCount();
+        
+        
         for (int i = 0; i < numRow; i++) {
-            total = total + Double.parseDouble(String.valueOf(tb_print_purchases_detail.getValueAt(i, 3)));
-
+            Object value = tb_print_purchases_detail.getValueAt(i, 3);
+         if (value != null && !String.valueOf(value).equalsIgnoreCase("null") && !String.valueOf(value).trim().isEmpty()) {
+            try {
+                total = total + Double.parseDouble(String.valueOf(value));
+            } catch (NumberFormatException e) {
+                System.out.println("Error al convertir fila " + i + ": " + e.getMessage());
+            }
         }
+    }
         txt_print_total.setText("" + total);
     }
 
@@ -116,10 +121,7 @@ public class Print extends javax.swing.JFrame {
 
         tb_print_purchases_detail.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "Producto", "Cantidad", "Precio", "Subtotal", "Proveedor", "Comprado por", "Fecha"

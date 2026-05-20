@@ -112,11 +112,16 @@ public class PurchasesDao {
     public List listPurchaseDetailQuery(int id) {
 
         List<Purchases> list_purchases = new ArrayList();
-        String query = "select pu.created, pude.purchase_price, pude.purchase_amount, pude.purchase_subtotal, su.name as supplier_name, pro.name as product_name, em.full_name from purchases pu inner join purchase_details pude on pu.id = pude.purchase_id inner join products pro on pude.product_id = pro.id inner join suppliers su on pu.supplier_id=su.id inner join employees em on pu.employee_id = em.id where pu.id=?";
+        String query = "select pu.created, pude.purchase_price, pude.purchase_amount, pude.purchase_subtotal,"
+                + " su.name as supplier_name, pro.name as product_name, em.full_name from purchases"
+                + " pu inner join purchase_details pude on pu.id = pude.purchase_id inner join products"
+                + " pro on pude.product_id = pro.id inner join suppliers su on pu.supplier_id=su.id inner join "
+                + " employees em on pu.employee_id = em.id where pu.id=? ";
 
         try {
             conn = cn.getConnection();
             pst = conn.prepareStatement(query);
+            pst.setInt(1, id);
             rs = pst.executeQuery();
 
             while (rs.next()) {
