@@ -50,6 +50,7 @@ public class SalesController implements ActionListener, MouseListener, KeyListen
         //Llamar a la escucha txt
         this.views.txt_sales_productCode.addKeyListener(this);
         this.views.txt_sales_price.addKeyListener(this);
+        this.views.txt_sales_identifyCliente.addKeyListener(this);
         this.views.txt_sales_nameCliente.addKeyListener(this);
         this.views.txt_sales_cantidad.addKeyListener(this);
 
@@ -174,7 +175,7 @@ public class SalesController implements ActionListener, MouseListener, KeyListen
     private void cleanTableTemp() {
         for (int i = 0; i < temp.getRowCount(); i++) {
             temp.removeRow(i);
-            i = i + 1;
+            i = i - 1;
         }
     }
     

@@ -43,7 +43,7 @@ public class SalesDao {
     //Registrar detalles de venta
     public boolean registerSaleDetailsQuery(int product_id, double sale_id, int sale_quantity, double sale_price, double sale_subtotal) {
 
-        String query = "INSER INTO sale_details (product_id, sale_id, sale_quantiy, sale_price, sale_subtotal)VALUES(?,?,?,?,?)";
+        String query = "INSERT INTO sales_details (product_id, sale_id, sale_quantity, sale_price, sale_subtotal)VALUES(?,?,?,?,?)";
         Timestamp dateTime = new Timestamp(new Date().getTime());
 
         try {

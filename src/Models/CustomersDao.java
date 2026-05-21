@@ -121,7 +121,7 @@ public class CustomersDao {
 
     //Buscar cliente
     public Customers searchCustomer(int id) {
-        String query = "Select cu.id cu.full_name From customers cu Where cu.id=?";
+        String query = "SELECT id, full_name FROM customers WHERE id = ?";
         Customers customer = new Customers();
         try {
             conn = cn.getConnection();
