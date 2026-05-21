@@ -5,6 +5,7 @@ import Controllers.CustomersController;
 import Controllers.EmployeesController;
 import Controllers.ProductsController;
 import Controllers.PurchasesController;
+import Controllers.SalesController;
 import Controllers.SettingsController;
 import Controllers.SuppliersController;
 import Models.Categories;
@@ -20,6 +21,8 @@ import Models.ProductDao;
 import Models.Products;
 import Models.Purchases;
 import Models.PurchasesDao;
+import Models.Sales;
+import Models.SalesDao;
 import Models.Suppliers;
 import Models.SuppliersDao;
 
@@ -44,6 +47,9 @@ public class SystemView extends javax.swing.JFrame {
     //Compras
     Purchases purchase = new Purchases();
     PurchasesDao purchaseDao = new PurchasesDao();
+    //Ventas
+    Sales sales = new Sales();
+    SalesDao salesDao = new SalesDao();
 
     public SystemView() {
         initComponents();
@@ -73,26 +79,23 @@ public class SystemView extends javax.swing.JFrame {
         this.repaint();
         //Controlador de empleados
         EmployeesController employee_account = new EmployeesController(employee, employeesDao, this);
-
         employee_account.listAllEmployees();
         //Controlador de clientes
         CustomersController customer_account = new CustomersController(customer, customersDao, this);
-
         customer_account.listAllCustomers();
         //Controlador de Proveedores
         SuppliersController supplier_account = new SuppliersController(supplier, suppliersDao, this);
         supplier_account.listAllSuppliers();
         //Controlador de Categorias
         CategoriesController category_section = new CategoriesController(category, categoryDao, this);
-
         category_section.listAllCategories();
         //Controlador de Productos
         ProductsController product_section = new ProductsController(product, productDao, this);
-
         product_section.listAllProducts();
         //Controlador de Compras
         PurchasesController purchase_section = new PurchasesController(purchase, purchaseDao, this, suppliersDao);
-
+        //Controlador de Ventas
+        SalesController sale_section= new SalesController(sales, salesDao, this);
     }
 
     public String titleInterface() {
