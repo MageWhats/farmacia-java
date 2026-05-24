@@ -1,35 +1,29 @@
 package Models;
 
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.Date;
-import java.sql.Timestamp;
-import javax.swing.JOptionPane;
 import java.sql.SQLException;
-import java.util.List;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import javax.swing.JOptionPane;
 
 public class CustomersDao {
-    //Instanciar conexion BD
 
-    ConnectionMySQL cn = new ConnectionMySQL();
-    Connection conn;
-    PreparedStatement pst;
-    ResultSet rs;
+    private final ConnectionMySQL cn = new ConnectionMySQL();
 
-    //Registrar Clientes
-    public boolean registerCutomersQuery(Customers customer) {
-        String query = "INSERT INTO customers(id,full_name,address,telephone,email,"
-                + "created,updated)VALUES(?,?,?,?,?,?,?)";
-
+    // 1. Registrar: Usando 'full_name' idéntico a MySQL
+    public boolean registerCustomerQuery(Customers customer) {
+        String query = "INSERT INTO customers (id, full_name, address, telephone, email, created, updated) VALUES (?, ?, ?, ?, ?, ?, ?)";
         Timestamp dateTime = new Timestamp(new Date().getTime());
 
-        try {
-            conn = cn.getConnection();
-            pst = conn.prepareStatement(query);
+        try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
+
             pst.setInt(1, customer.getId());
-            pst.setString(2, customer.getFull_name());
+            pst.setString(2, customer.getFullName());
             pst.setString(3, customer.getAddress());
             pst.setString(4, customer.getTelephone());
             pst.setString(5, customer.getEmail());
@@ -38,103 +32,114 @@ public class CustomersDao {
 
             pst.execute();
             return true;
-
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al registrar cliente" + e);
+            JOptionPane.showMessageDialog(null, "Error al registrar cliente: " + e.getMessage(), "Error SQL", JOptionPane.ERROR_MESSAGE);
             return false;
         }
     }
 
-    //Listar Clientes
-    public List listCustomersQuery(String value) {
-        List<Customers> list_customers = new ArrayList();
+    // 2. Listar: Ordenado y buscando por la columna 'full_name'
+    public List<Customers> listCustomersQuery(String value) {
+        List<Customers> listCustomers = new ArrayList<>();
+        String queryAll = "SELECT * FROM customers ORDER BY full_name ASC";
+        String querySearch = "SELECT * FROM customers WHERE full_name LIKE ? ORDER BY full_name ASC";
 
-        String query = "SELECT * FROM customers";
-        String query_search_customer = "SELECT * FROM customers WHERE id LIKE '%" + value + "%'";
-
-        try {
-            conn = cn.getConnection();
-            if (value.equalsIgnoreCase("")) {
-                pst = conn.prepareCall(query);
-                rs = pst.executeQuery();
+        try (Connection conn = cn.getConnection()) {
+            if (value == null || value.trim().isEmpty()) {
+                try (PreparedStatement pst = conn.prepareStatement(queryAll); ResultSet rs = pst.executeQuery()) {
+                    while (rs.next()) {
+                        listCustomers.add(mapResultSetToCustomer(rs));
+                    }
+                }
             } else {
-                pst = conn.prepareStatement(query_search_customer);
-                rs = pst.executeQuery();
-            }
-            while (rs.next()) {
-                Customers customer = new Customers();
-                customer.setId(rs.getInt("id"));
-                customer.setFull_name(rs.getString("full_name"));
-                customer.setAddress(rs.getString("address"));
-                customer.setTelephone(rs.getString("telephone"));
-                customer.setEmail(rs.getString("email"));
-                list_customers.add(customer);
-
+                try (PreparedStatement pst = conn.prepareStatement(querySearch)) {
+                    pst.setString(1, "%" + value + "%");
+                    try (ResultSet rs = pst.executeQuery()) {
+                        while (rs.next()) {
+                            listCustomers.add(mapResultSetToCustomer(rs));
+                        }
+                    }
+                }
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.toString());
+            JOptionPane.showMessageDialog(null, "Error al listar clientes: " + e.getMessage(), "Error SQL", JOptionPane.ERROR_MESSAGE);
         }
-        return list_customers;
+        return listCustomers;
     }
 
-    //Modificar Cliente
-    public boolean updateCustomersQuery(Customers customer) {
-        String query = "UPDATE customers SET full_name = ?, address = ?, telephone = ?, "
-                + "email = ?, updated = ? WHERE id = ?";
-
+    // 3. Modificar: Actualizando la columna 'full_name' según el ID único
+    public boolean updateCustomerQuery(Customers customer) {
+        String query = "UPDATE customers SET full_name=?, address=?, telephone=?, email=?, updated=? WHERE id=?";
         Timestamp dateTime = new Timestamp(new Date().getTime());
-        try {
-            conn = cn.getConnection();
-            pst = conn.prepareStatement(query);
 
-            pst.setString(1, customer.getFull_name());
-            pst.setString(2, customer.getAddress());
-            pst.setString(3, customer.getTelephone());
-            pst.setString(4, customer.getEmail());
-            pst.setTimestamp(5, dateTime);
-            pst.setInt(6, customer.getId());
+        try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
 
-            pst.execute();
-            return true;
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al modificar datos del cliente " + e);
-            return false;
-        }
-    }
-
-    //Eliminar Cliente
-    public boolean deleteCustomersQuery(int id) {
-        String query = "DELETE FROM customers WHERE id= " + id;
-        try {
-            conn = cn.getConnection();
-            pst = conn.prepareStatement(query);
+            pst.setString(2, customer.getFullName());
+            pst.setString(3, customer.getAddress());
+            pst.setString(4, customer.getTelephone());
+            pst.setString(5, customer.getEmail());
+            pst.setTimestamp(6, dateTime);
+            pst.setInt(7, customer.getId());
 
             pst.execute();
             return true;
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "No se puede eliminar cliente que "
-                    + "tenga relacion con otra tabla" + e);
+            JOptionPane.showMessageDialog(null, "Error al modificar cliente: " + e.getMessage(), "Error SQL", JOptionPane.ERROR_MESSAGE);
             return false;
         }
     }
 
-    //Buscar cliente
-    public Customers searchCustomer(int id) {
-        String query = "SELECT id, full_name FROM customers WHERE id = ?";
-        Customers customer = new Customers();
-        try {
-            conn = cn.getConnection();
-            pst = conn.prepareStatement(query);
+    // 4. Eliminar Clientes
+    public boolean deleteCustomerQuery(int id) {
+        String query = "DELETE FROM customers WHERE id = ?";
+
+        try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
+
             pst.setInt(1, id);
-            rs = pst.executeQuery();
-            if (rs.next()) {
-                customer.setId(rs.getInt("id"));
-                customer.setFull_name(rs.getString("full_name"));
-            }
+            pst.execute();
+            return true;
+            // Modifica el catch de tu deleteCustomerQuery en CustomersDao.java
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            if (e.getErrorCode() == 1451) { // 1451 es el código de error de Foreign Key en MySQL
+                JOptionPane.showMessageDialog(null,
+                        "No se puede eliminar este cliente porque tiene facturas de ventas asociadas en el historial.",
+                        "Restricción de Seguridad", JOptionPane.WARNING_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al eliminar cliente: " + e.getMessage(), "Error SQL", JOptionPane.ERROR_MESSAGE);
+            }
+            return false;
         }
+
+    }
+    
+    public Customers searchIdCustomer(int id){
+        String query = "Select  full_name from customers where id = ?";
+        Customers customer = new Customers();
+        
+        try (Connection conn = cn.getConnection();
+                PreparedStatement pst = conn.prepareStatement(query)){
+            pst.setInt(1, id);
+            try(ResultSet rs = pst.executeQuery()){
+                if(rs.next()){
+                    customer.setFullName(rs.getString("full_name"));
+                }
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Error al buscar código: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return customer;
+    }
+
+    // 5. Mapeador DRY corregido para leer 'full_name'
+    private Customers mapResultSetToCustomer(ResultSet rs) throws SQLException {
+        Customers customer = new Customers();
+        customer.setId(rs.getInt("id"));
+        customer.setFullName(rs.getString("full_name")); // ¡Corregido aquí para coincidir con MySQL!
+        customer.setAddress(rs.getString("address"));
+        customer.setTelephone(rs.getString("telephone"));
+        customer.setEmail(rs.getString("email"));
+        customer.setCreated(rs.getTimestamp("created").toString());
+        customer.setUpdated(rs.getTimestamp("updated").toString());
         return customer;
     }
 }

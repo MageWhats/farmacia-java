@@ -30,9 +30,9 @@ public class LoginView extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txt_UsuarioLogin = new javax.swing.JTextField();
-        txt_Pass = new javax.swing.JPasswordField();
-        btn_ingresarLogin = new javax.swing.JButton();
+        txt_username = new javax.swing.JTextField();
+        txt_password = new javax.swing.JPasswordField();
+        btn_login = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         Wallpaper = new javax.swing.JLabel();
 
@@ -56,15 +56,15 @@ public class LoginView extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("INICIO DE SESION");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 50, -1, 60));
-        jPanel1.add(txt_UsuarioLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 170, 210, 35));
+        jPanel1.add(txt_username, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 170, 210, 35));
 
-        txt_Pass.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jPanel1.add(txt_Pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 220, 210, 35));
+        txt_password.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jPanel1.add(txt_password, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 220, 210, 35));
 
-        btn_ingresarLogin.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btn_ingresarLogin.setText("Ingresar");
-        btn_ingresarLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel1.add(btn_ingresarLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 280, 210, 35));
+        btn_login.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btn_login.setText("Ingresar");
+        btn_login.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel1.add(btn_login, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 280, 210, 35));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 0, 490, 420));
 
@@ -85,13 +85,13 @@ public class LoginView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Wallpaper;
-    public javax.swing.JButton btn_ingresarLogin;
+    public javax.swing.JButton btn_login;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     public javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    public javax.swing.JPasswordField txt_Pass;
-    public javax.swing.JTextField txt_UsuarioLogin;
+    public javax.swing.JPasswordField txt_password;
+    public javax.swing.JTextField txt_username;
     // End of variables declaration//GEN-END:variables
 }

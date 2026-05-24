@@ -1,86 +1,45 @@
 
 package Models;
 
+public class Purchases{
+    // Atributos definidos por la base de datos de tu esquema
+    private int id;             // `id` (INT, Autoincremental)
+    private double total;       // `total` (DOUBLE)
+    private String created;     // `created` (DATETIME maneja string en este diseño)
+    private int supplierId;   
+    private int employeeId;
+    private String employeeName;    // `employee_id` (INT) - Convención Java
+    private String supplierName;
 
-public class Purchases {
-    //Definir  Variables
-    private int id; 
-    private int code;
-    private String product_name;
-    private int purchase_amount;
-    private double purchase_price;
-    private double purchase_subtotal;
-    private double total;
-    private String created;
-    private String supplier_name_product;
-    private String purchase;
 
+    // Constructor vacío por defecto
     public Purchases() {
     }
 
-    public Purchases(int id, int code, String product_name
-            , int purchase_amount, double purchase_price, 
-            double purchase_subtotal, double total, 
-            String created, String supplier_name_product,
-            String purchase) {
+    // Constructor para transferir datos rápido
+    public Purchases(int id, double total, String created, int supplierId, String employeeName) {
         this.id = id;
-        this.code = code;
-        this.product_name = product_name;
-        this.purchase_amount = purchase_amount;
-        this.purchase_price = purchase_price;
-        this.purchase_subtotal = purchase_subtotal;
         this.total = total;
         this.created = created;
-        this.supplier_name_product = supplier_name_product;
-        this.purchase = purchase;
+        this.supplierId = supplierId;
+        this.employeeName = employeeName;
     }
 
+    public int getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    // Getters y Setters limpios
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public String getProduct_name() {
-        return product_name;
-    }
-
-    public void setProduct_name(String product_name) {
-        this.product_name = product_name;
-    }
-
-    public int getPurchase_amount() {
-        return purchase_amount;
-    }
-
-    public void setPurchase_amount(int purchase_amount) {
-        this.purchase_amount = purchase_amount;
-    }
-
-    public double getPurchase_price() {
-        return purchase_price;
-    }
-
-    public void setPurchase_price(double purchase_price) {
-        this.purchase_price = purchase_price;
-    }
-
-    public double getPurchase_subtotal() {
-        return purchase_subtotal;
-    }
-
-    public void setPurchase_subtotal(double purchase_subtotal) {
-        this.purchase_subtotal = purchase_subtotal;
     }
 
     public double getTotal() {
@@ -99,22 +58,26 @@ public class Purchases {
         this.created = created;
     }
 
-    public String getSupplier_name_product() {
-        return supplier_name_product;
+    public int getSupplierId() {
+        return supplierId;
     }
 
-    public void setSupplier_name_product(String supplier_name_product) {
-        this.supplier_name_product = supplier_name_product;
+    public void setSupplierId(int supplierId) {
+        this.supplierId = supplierId;
     }
 
-    public String getPurchase() {
-        return purchase;
+    public String getEmployeeName() {
+        return employeeName;
     }
 
-    public void setPurchase(String purchase) {
-        this.purchase = purchase;
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
     }
-    
-    
-    
+    public String getSupplierName() {
+    return supplierName;
+}
+
+public void setSupplierName(String supplierName) {
+    this.supplierName = supplierName;
+}
 }

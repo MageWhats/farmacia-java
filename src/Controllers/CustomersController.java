@@ -2,8 +2,6 @@ package Controllers;
 
 import Models.Customers;
 import Models.CustomersDao;
-import Models.Customers;
-import Models.EmployeesDao;
 import Views.SystemView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,198 +15,184 @@ import javax.swing.table.DefaultTableModel;
 
 public class CustomersController implements ActionListener, MouseListener, KeyListener {
 
-    //Encapsular Variables
-    private Customers customer;
-    private CustomersDao customersDao;
-    private SystemView views;
-    DefaultTableModel model = new DefaultTableModel();
+    private final Customers customer;
+    private final CustomersDao customerDao;
+    private final SystemView views;
+    private DefaultTableModel model = new DefaultTableModel();
 
-    //Contructor
-    public CustomersController(Customers customer, CustomersDao customersDao, SystemView views) {
+    public CustomersController(Customers customer, CustomersDao customerDao, SystemView views) {
         this.customer = customer;
-        this.customersDao = customersDao;
+        this.customerDao = customerDao;
         this.views = views;
-        //Boton registrar Cliente "Escucha"
-        this.views.btn_customer_register.addActionListener(this);
-        //TxT buscar Cliente "Escucha"
-        this.views.txt_customer_search.addKeyListener(this);
-        //Tabla
-        this.views.tb_customer.addMouseListener(this);
-        //Boton modificar clientes
-        this.views.btn_customer_modificar.addActionListener(this);
-        //Boton de eliminar
-        this.views.btn_customer_remove.addActionListener(this);
-        //Boton cancelar
-        this.views.btn_customer_cancelar.addActionListener(this);
-        //Label customer
-        this.views.jLabelCustomers.addMouseListener(this);
 
+        // Escuchadores de botones
+        this.views.btn_customer_register.addActionListener(this);
+        this.views.btn_customer_update.addActionListener(this);
+        this.views.btn_customer_delete.addActionListener(this);
+        this.views.btn_customer_cancel.addActionListener(this);
+        
+        // Tablas y barra de búsqueda
+        this.views.txt_customer_search.addKeyListener(this);
+        this.views.tb_customer.addMouseListener(this);
+        this.views.jLabelCustomers.addMouseListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == views.btn_customer_register) {
-            if (views.txt_customer_id.getText().equals("")
-                    || views.txt_customer_name.getText().equals("")
-                    || views.txt_customer_direccion.getText().equals("")
-                    || views.txt_customer_telefono.getText().equals("")
-                    || views.txt_customer_correo.getText().equals("")) {
-                JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios");
-            } else {
-                customer.setId(Integer.parseInt(views.txt_customer_id.getText().trim()));
-                customer.setFull_name(views.txt_customer_name.getText().trim());
-                customer.setAddress(views.txt_customer_direccion.getText().trim());
-                customer.setTelephone(views.txt_customer_telefono.getText().trim());
-                customer.setEmail(views.txt_customer_correo.getText().trim());
-                if (customersDao.registerCutomersQuery(customer)) {
-                    JOptionPane.showMessageDialog(null, "Cliente registrado con exito");
-                    cleanFields();
-                    cleanTable();
-                    listAllCustomers();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error al registrar este cliente");
-                }
-            }
-
-        } else if (e.getSource() == views.btn_customer_modificar) {
-            if (views.txt_customer_id.getText().equals("")) {
-                JOptionPane.showMessageDialog(null, "Selecciona una fila de la tabla para continuar");
-            } else {
-                if (views.txt_customer_name.getText().equals("")
-                        || views.txt_customer_direccion.getText().equals("")
-                        || views.txt_customer_telefono.getText().equals("")
-                        || views.txt_customer_correo.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios");
-                } else {
-                    customer.setId(Integer.parseInt(views.txt_customer_id.getText().trim()));
-                    customer.setFull_name(views.txt_customer_name.getText().trim());
-                    customer.setTelephone(views.txt_customer_telefono.getText().trim());
-                    customer.setAddress(views.txt_customer_direccion.getText().trim());
-                    customer.setEmail(views.txt_customer_correo.getText().trim());
-
-                    if (customersDao.updateCustomersQuery(customer)) {
-                        cleanTable(); // Primero limpia los datos viejos de la tabla
-                        listAllCustomers(); // Luego carga los datos actualizados
-                        cleanFields();//Limpiar cuadro de textos formularios
-                        views.btn_customer_register.setEnabled(true);
-                        JOptionPane.showMessageDialog(null, "Datos del cliente modificados con exito");
-
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Ha ocurrido un error al modificar el cliente ");
-                    }
-
-                }
-
-            }
-        } else if (e.getSource() == views.btn_customer_remove) {
-            int row = views.tb_customer.getSelectedRow();
-            if (row == -1) {
-                JOptionPane.showMessageDialog(null, "Debes seleccionar un cliente para eliminar");
-            } else {
-                int id = Integer.parseInt(views.tb_customer.getValueAt(row, 0).toString());
-                int question = JOptionPane.showConfirmDialog(null, "En realidad quieres eliminar el cliente");
-                if (question == 0 && customersDao.deleteCustomersQuery(id) != false) {
-                    cleanTable();
-                    cleanFields();
-                    listAllCustomers();
-                    JOptionPane.showMessageDialog(null, "El usuario fue eliminado con exito");
-                }
-
-            }
-        } else if (e.getSource() == views.btn_customer_cancelar) {
+            executeRegister();
+        } else if (e.getSource() == views.btn_customer_update) {
+            executeUpdate();
+        } else if (e.getSource() == views.btn_customer_delete) {
+            executeDelete();
+        } else if (e.getSource() == views.btn_customer_cancel) {
             cleanFields();
             views.btn_customer_register.setEnabled(true);
-            views.txt_customer_id.setEditable(true);
-            views.txt_customer_id.setEnabled(true);
         }
-
     }
 
-    //Listar Clientes
+    private void executeRegister() {
+        if (areFieldsEmpty()) {
+            JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        try {
+            // El usuario digita el id_card (cédula), NO el ID autoincrementable
+            customer.setId(Integer.parseInt(views.txt_customer_id.getText().trim()));
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "La cédula/DNI debe contener solo números.", "Error de Formato", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        customer.setFullName(views.txt_customer_name.getText().trim());
+        customer.setAddress(views.txt_customer_address.getText().trim());
+        customer.setTelephone(views.txt_customer_telephone.getText().trim());
+        customer.setEmail(views.txt_customer_email.getText().trim());
+
+        if (customerDao.registerCustomerQuery(customer)) {
+            JOptionPane.showMessageDialog(null, "Cliente guardado con éxito.");
+            cleanFields();
+            listAllCustomers();
+        }
+    }
+
+    private void executeUpdate() {
+        if (views.txt_customer_id.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Selecciona una fila de la tabla para modificar.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        if (areFieldsEmpty()) {
+            JOptionPane.showMessageDialog(null, "Campos obligatorios vacíos.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        try {
+            // Aquí SÍ extraemos el ID oculto de la base de datos para pasárselo al WHERE
+            customer.setId(Integer.parseInt(views.txt_customer_id.getText().trim()));
+            
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Verifique los formatos numéricos.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        customer.setFullName(views.txt_customer_name.getText().trim());
+        customer.setAddress(views.txt_customer_address.getText().trim());
+        customer.setTelephone(views.txt_customer_telephone.getText().trim());
+        customer.setEmail(views.txt_customer_email.getText().trim());
+
+        if (customerDao.updateCustomerQuery(customer)) {
+            cleanFields();
+            listAllCustomers();
+            views.btn_customer_register.setEnabled(true);
+            JOptionPane.showMessageDialog(null, "Cliente actualizado.");
+        }
+    }
+
+    private void executeDelete() {
+        int row = views.tb_customer.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(null, "Selecciona un cliente para eliminar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        try {
+            // Extraemos el ID de la fila seleccionada (columna 0) para enviarlo al DELETE
+            int id = Integer.parseInt(views.tb_customer.getValueAt(row, 0).toString());
+            int question = JOptionPane.showConfirmDialog(null, "¿Eliminar este cliente?", "Confirmar", JOptionPane.YES_NO_OPTION);
+            
+            if (question == JOptionPane.YES_OPTION && customerDao.deleteCustomerQuery(id)) {
+                cleanFields();
+                listAllCustomers();
+                views.btn_customer_register.setEnabled(true);
+                JOptionPane.showMessageDialog(null, "Cliente eliminado.");
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Error de ID.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private boolean areFieldsEmpty() {
+        return views.txt_customer_id.getText().trim().isEmpty()
+                || views.txt_customer_name.getText().trim().isEmpty()
+                || views.txt_customer_address.getText().trim().isEmpty()
+                || views.txt_customer_telephone.getText().trim().isEmpty()
+                || views.txt_customer_email.getText().trim().isEmpty();
+    }
+
+    public void cleanFields() {
+        views.txt_customer_id.setText("");
+        views.txt_customer_name.setText("");
+        views.txt_customer_address.setText("");
+        views.txt_customer_telephone.setText("");
+        views.txt_customer_email.setText("");
+    }
+
     public void listAllCustomers() {
-        List<Customers> list = customersDao.listCustomersQuery(views.txt_customer_search.getText());
+        List<Customers> list = customerDao.listCustomersQuery(views.txt_customer_search.getText().trim());
         model = (DefaultTableModel) views.tb_customer.getModel();
-        Object[] row = new Object[5];
-        for (int i = 0; i < list.size(); i++) {
-            row[0] = list.get(i).getId();
-            row[1] = list.get(i).getFull_name();
-            row[2] = list.get(i).getAddress();
-            row[3] = list.get(i).getTelephone();
-            row[4] = list.get(i).getEmail();
+        model.setRowCount(0);
+
+        for (Customers cust : list) {
+            Object[] row = new Object[6];
+            row[0] = cust.getId();
+            row[1] = cust.getFullName();
+            row[2] = cust.getAddress();
+            row[3] = cust.getTelephone();
+            row[4] = cust.getEmail();
             model.addRow(row);
         }
         views.tb_customer.setModel(model);
     }
 
-    //Limpiar campos
-    public void cleanFields() {
-        views.txt_customer_id.setText("");
-        views.txt_customer_id.setEditable(true);
-        views.txt_customer_name.setText("");
-        views.txt_customer_direccion.setText("");
-        views.txt_customer_telefono.setText("");
-        views.txt_customer_correo.setText("");
-
-    }
-
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getSource() == views.tb_customer) {
-            int row = views.tb_customer.rowAtPoint(e.getPoint());
-            views.txt_customer_id.setText(views.tb_customer.getValueAt(row, 0).toString());
-            views.txt_customer_name.setText(views.tb_customer.getValueAt(row, 1).toString());
-            views.txt_customer_direccion.setText(views.tb_customer.getValueAt(row, 2).toString());
-            views.txt_customer_telefono.setText(views.tb_customer.getValueAt(row, 3).toString());
-            views.txt_customer_correo.setText(views.tb_customer.getValueAt(row, 4).toString());
-
-            views.btn_customer_register.setEnabled(false);
-            views.txt_customer_id.setEditable(false);
-        }else if (e.getSource()==views.jLabelCustomers){
+            int row = views.tb_customer.getSelectedRow();
+            if (row != -1) {
+                // Al hacer clic, cargamos el ID autoincrementado en el campo oculto
+                views.txt_customer_id.setText(views.tb_customer.getValueAt(row, 0).toString());
+                views.txt_customer_name.setText(views.tb_customer.getValueAt(row, 1).toString());
+                views.txt_customer_address.setText(views.tb_customer.getValueAt(row, 2).toString());
+                views.txt_customer_telephone.setText(views.tb_customer.getValueAt(row, 3).toString());
+                views.txt_customer_email.setText(views.tb_customer.getValueAt(row, 4).toString());
+                
+                views.btn_customer_register.setEnabled(false);
+            }
+        } else if (e.getSource() == views.jLabelCustomers) {
             views.jTabbedPane1.setSelectedIndex(3);
-            cleanTable();
+            listAllCustomers();
             cleanFields();
-            listAllCustomers();
         }
-
     }
 
-    @Override
-    public void mousePressed(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
+    @Override public void keyReleased(KeyEvent e) {
         if (e.getSource() == views.txt_customer_search) {
-            cleanTable();
             listAllCustomers();
         }
     }
 
-//Limpiar Tabla
-    public void cleanTable() {
-        for (int i = 0; i < model.getRowCount(); i++) {
-            model.removeRow(i);
-            i = i - 1;
-        }
-    }
+    @Override public void mousePressed(MouseEvent e) {}
+    @Override public void mouseReleased(MouseEvent e) {}
+    @Override public void mouseEntered(MouseEvent e) {}
+    @Override public void mouseExited(MouseEvent e) {}
+    @Override public void keyTyped(KeyEvent e) {}
+    @Override public void keyPressed(KeyEvent e) {}
 }

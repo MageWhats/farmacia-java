@@ -1,29 +1,32 @@
 package Models;
 
 public class Sales {
-
-    //Variables
     private int id;
-    private String sale_date;
-    private double total_to_pay;
-    private int customer_id;
-    private String customer_name;
-    private int employee_id;
-    private String employee_name;
+    private int customerId;      // camelCase profesional
+    private int employeeId;      // camelCase profesional
+    private double totalToPay;   // double primitivo y camelCase para el monto total
+    private String saleDate;     // Fecha de la transacción
+    
+    // Atributos extendidos útiles para los JOINs y visualización en tablas
+    private String customerName; // camelCase profesional
+    private String employeeName; // camelCase profesional
 
+    // Constructor vacío obligatorio
     public Sales() {
     }
 
-    public Sales(int id, String sale_date, double total_to_pay, int customer_id, String customer_name, int employee_id, String employee_name) {
+    // Constructor completo optimizado
+    public Sales(int id, int customerId, int employeeId, double totalToPay, String saleDate, String customerName, String employeeName) {
         this.id = id;
-        this.sale_date = sale_date;
-        this.total_to_pay = total_to_pay;
-        this.customer_id = customer_id;
-        this.customer_name = customer_name;
-        this.employee_id = employee_id;
-        this.employee_name = employee_name;
+        this.customerId = customerId;
+        this.employeeId = employeeId;
+        this.totalToPay = totalToPay;
+        this.saleDate = saleDate;
+        this.customerName = customerName;
+        this.employeeName = employeeName;
     }
 
+    // Getters y Setters limpios
     public int getId() {
         return id;
     }
@@ -32,52 +35,51 @@ public class Sales {
         this.id = id;
     }
 
-    public String getSale_date() {
-        return sale_date;
+    public int getCustomerId() {
+        return customerId;
     }
 
-    public void setSale_date(String sale_date) {
-        this.sale_date = sale_date;
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
     }
 
-    public double getTotal_to_pay() {
-        return total_to_pay;
+    public int getEmployeeId() {
+        return employeeId;
     }
 
-    public void setTotal_to_pay(double total_to_pay) {
-        this.total_to_pay = total_to_pay;
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
     }
 
-    public int getCustomer_id() {
-        return customer_id;
+    public double getTotalToPay() {
+        return totalToPay;
     }
 
-    public void setCustomer_id(int customer_id) {
-        this.customer_id = customer_id;
+    public void setTotalToPay(double totalToPay) {
+        this.totalToPay = totalToPay;
     }
 
-    public String getCustomer_name() {
-        return customer_name;
+    public String getSaleDate() {
+        return saleDate;
     }
 
-    public void setCustomer_name(String customer_name) {
-        this.customer_name = customer_name;
+    public void setSaleDate(String saleDate) {
+        this.saleDate = saleDate;
     }
 
-    public int getEmployee_id() {
-        return employee_id;
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public void setEmployee_id(int employee_id) {
-        this.employee_id = employee_id;
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
-    public String getEmployee_name() {
-        return employee_name;
+    public String getEmployeeName() {
+        return employeeName;
     }
 
-    public void setEmployee_name(String employee_name) {
-        this.employee_name = employee_name;
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
     }
-
 }

@@ -1,36 +1,37 @@
 
 package Models;
 
-
 public class Products {
     private int id;
-    private int code;
+    private int code_product;
     private String name; 
     private String description;
-    private Double unit_price;
-    private int product_quantity;
+    private double unitPrice; // Cambiado a double primitivo y camelCase
+    private int productQuantity; // Cambiado a camelCase
     private String created;
     private String update;
-    private int category_id;
-    private String category_name;
+    private int categoryId; // Cambiado a camelCase
+    private String categoryName; // Cambiado a camelCase
 
+    // Constructor vacío (Esencial para frameworks y mantenimiento)
     public Products() {
-        
     }
 
-    public Products(int id, int code, String name, String description, Double unit_price, int product_quantity, String created, String update, int category_id, String category_name) {
+    // Constructor completo optimizado
+    public Products(int id, int code_product, String name, String description, double unitPrice, int productQuantity, String created, String update, int categoryId, String categoryName) {
         this.id = id;
-        this.code = code;
+        this.code_product = code_product;
         this.name = name;
         this.description = description;
-        this.unit_price = unit_price;
-        this.product_quantity = product_quantity;
+        this.unitPrice = unitPrice;
+        this.productQuantity = productQuantity;
         this.created = created;
         this.update = update;
-        this.category_id = category_id;
-        this.category_name = category_name;
+        this.categoryId = categoryId;
+        this.categoryName = categoryName;
     }
 
+    // Getters y Setters limpios
     public int getId() {
         return id;
     }
@@ -40,11 +41,11 @@ public class Products {
     }
 
     public int getCode() {
-        return code;
+        return code_product;
     }
 
     public void setCode(int code) {
-        this.code = code;
+        this.code_product = code;
     }
 
     public String getName() {
@@ -63,20 +64,20 @@ public class Products {
         this.description = description;
     }
 
-    public Double getUnit_price() {
-        return unit_price;
+    public double getUnitPrice() {
+        return unitPrice;
     }
 
-    public void setUnit_price(Double unit_price) {
-        this.unit_price = unit_price;
+    public void setUnitPrice(double unitPrice) {
+        this.unitPrice = unitPrice;
     }
 
-    public int getProduct_quantity() {
-        return product_quantity;
+    public int getProductQuantity() {
+        return productQuantity;
     }
 
-    public void setProduct_quantity(int product_quantity) {
-        this.product_quantity = product_quantity;
+    public void setProductQuantity(int productQuantity) {
+        this.productQuantity = productQuantity;
     }
 
     public String getCreated() {
@@ -95,24 +96,19 @@ public class Products {
         this.update = update;
     }
 
-    public int getCategory_id() {
-        return category_id;
+    public int getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategory_id(int category_id) {
-        this.category_id = category_id;
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 
-    public String getCategory_name() {
-        return category_name;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setCategory_name(String category_name) {
-        this.category_name = category_name;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
-
-
-    
-    
-    
 }

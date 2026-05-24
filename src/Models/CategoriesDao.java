@@ -1,131 +1,114 @@
 package Models;
 
-import java.sql.Timestamp;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
-import Views.SystemView;
 
 public class CategoriesDao {
-    //Instanciar conexion BD
 
-    ConnectionMySQL cn = new ConnectionMySQL();
-    Connection conn;
-    PreparedStatement pst;
-    ResultSet rs;
-    SystemView views;
+    private final ConnectionMySQL cn = new ConnectionMySQL();
 
-    // Constructor para recibir y asignar la vista
-    public CategoriesDao(SystemView views) {
-        this.views = views;
-    }
+    // 1. Registrar Categorías: El ID es omitido al ser autoincrementable
+    public boolean registerCategoryQuery(Categories category) {
+        String query = "INSERT INTO categories (name, created, updated) VALUES (?, ?, ?)";
+        Timestamp dateTime = new Timestamp(new Date().getTime());
 
-    //Registrar Categoria
-    public boolean registerCategoryQuery(Categories categories) {
-        String query = "INSERT INTO categories (name,created,updated) VALUES (?,?,?)";
-        Timestamp dataTime = new Timestamp(new Date().getTime());
+        try (Connection conn = cn.getConnection();
+             PreparedStatement pst = conn.prepareStatement(query)) {
 
-        try {
-            conn = cn.getConnection();
-            pst = conn.prepareStatement(query);
-            pst.setString(1, categories.getName());
-            pst.setTimestamp(2, dataTime);
-            pst.setTimestamp(3, dataTime);
+            pst.setString(1, category.getName());
+            pst.setTimestamp(2, dateTime);
+            pst.setTimestamp(3, dateTime);
+
             pst.execute();
             return true;
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al Registrar la categoria" + e);
+            JOptionPane.showMessageDialog(null, "Error al registrar la categoría: " + e.getMessage(), "Error SQL", JOptionPane.ERROR_MESSAGE);
             return false;
         }
     }
 
-    //Listar Categoria
-    public List listCategoriesQuery(String value) {
-        List<Categories> list_categories = new ArrayList();
-        String query = "SELECT * FROM categories";
-        String query_search_category = "SELECT*FROM categories WHERE name LIKE '%" + value + "%'";
+    // 2. Listar y Buscar categorías con parámetros blindados contra inyecciones SQL
+    public List<Categories> listCategoriesQuery(String value) {
+        List<Categories> listCategories = new ArrayList<>();
+        String queryAll = "SELECT * FROM categories ORDER BY name ASC";
+        String querySearch = "SELECT * FROM categories WHERE name LIKE ? ORDER BY name ASC";
 
-        try {
-            conn = cn.getConnection();
-            if (value.equalsIgnoreCase("")) {
-                pst = conn.prepareStatement(query);
-                rs = pst.executeQuery();
+        try (Connection conn = cn.getConnection()) {
+            if (value == null || value.trim().isEmpty()) {
+                try (PreparedStatement pst = conn.prepareStatement(queryAll);
+                     ResultSet rs = pst.executeQuery()) {
+                    while (rs.next()) {
+                        listCategories.add(mapResultSetToCategory(rs));
+                    }
+                }
             } else {
-                pst = conn.prepareStatement(query_search_category);
-                rs = pst.executeQuery();
-            }
-            while (rs.next()) {
-                Categories category = new Categories();
-                category.setId(rs.getInt("id"));
-                category.setName(rs.getString("name"));
-                list_categories.add(category);
-
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.toString());
-        }
-        return list_categories;
-    }
-
-    //Modificar Categoria
-    public boolean updateCategoryQuery(Categories categories) {
-        String query = "Update categories SET name=?,updated=? WHERE id =?";
-        Timestamp dataTime = new Timestamp(new Date().getTime());
-
-        try {
-            conn = cn.getConnection();
-            pst = conn.prepareStatement(query);
-            pst.setString(1, categories.getName());
-            pst.setTimestamp(2, dataTime);
-            pst.setInt(3, categories.getId());
-            pst.execute();
-            return true;
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al modificar la categoria" + e);
-            return false;
-        }
-    }
-
-    //Eliminar Categoria
-    public boolean deleteCategoryQuery(int id) {
-        String query = "DELETE FROM categories WHERE id =" + id;
-        try {
-            conn = cn.getConnection();
-            pst = conn.prepareStatement(query);
-            pst.execute();
-            return true;
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al eliminar la categoria" + e);
-            return false;
-        }
-    }
-
-    //Refrescar Categoria en el combobox de productos
-    public void refrescarCategoriesQuery() {
-        views.cb_product_category.removeAllItems();
-        String query = "Select id, name from categories order by id ASC";
-        try {
-            conn = cn.getConnection();
-            pst = conn.prepareStatement(query);
-            rs = pst.executeQuery();
-
-            while (rs.next()) {
-                while (rs.next()) {
-                    int id = rs.getInt("id");
-                    String name = rs.getString("name");
-
-                    // 2. Insertamos el objeto estructurado completo en el JComboBox
-                    views.cb_product_category.addItem(new DynamicCb(id, name));
+                try (PreparedStatement pst = conn.prepareStatement(querySearch)) {
+                    pst.setString(1, "%" + value + "%");
+                    try (ResultSet rs = pst.executeQuery()) {
+                        while (rs.next()) {
+                            listCategories.add(mapResultSetToCategory(rs));
+                        }
+                    }
                 }
             }
-
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al cargar categorias" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al listar las categorías: " + e.getMessage(), "Error SQL", JOptionPane.ERROR_MESSAGE);
         }
+        return listCategories;
+    }
+
+    // 3. Modificar Categorías utilizando la cláusula WHERE vinculada al ID único
+    public boolean updateCategoryQuery(Categories category) {
+        String query = "UPDATE categories SET name=?, updated=? WHERE id=?";
+        Timestamp dateTime = new Timestamp(new Date().getTime());
+
+        try (Connection conn = cn.getConnection();
+             PreparedStatement pst = conn.prepareStatement(query)) {
+
+            pst.setString(1, category.getName());
+            pst.setTimestamp(2, dateTime);
+            pst.setInt(3, category.getId());
+
+            pst.execute();
+            return true;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al modificar la categoría: " + e.getMessage(), "Error SQL", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+
+    // 4. Eliminar Categorías
+    public boolean deleteCategoryQuery(int id) {
+        String query = "DELETE FROM categories WHERE id = ?";
+
+        try (Connection conn = cn.getConnection();
+             PreparedStatement pst = conn.prepareStatement(query)) {
+
+            pst.setInt(1, id);
+            pst.execute();
+            return true;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al eliminar la categoría seleccionada: " + e.getMessage(), "Error SQL", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+
+    /**
+     * Mapeador DRY Centralizado: Convierte filas de MySQL en objetos encapsulados de Java
+     */
+    private Categories mapResultSetToCategory(ResultSet rs) throws SQLException {
+        Categories category = new Categories();
+        category.setId(rs.getInt("id"));
+        category.setName(rs.getString("name"));
+        category.setCreated(rs.getTimestamp("created").toString());
+        category.setUpdated(rs.getTimestamp("updated").toString());
+        return category;
     }
 }

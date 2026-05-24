@@ -2,13 +2,12 @@ package Controllers;
 
 import Models.Employees;
 import Models.EmployeesDao;
-import static Models.EmployeesDao.id_user;
-import static Models.EmployeesDao.rol_user;
 import Views.SystemView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -16,253 +15,200 @@ import javax.swing.table.DefaultTableModel;
 
 public class EmployeesController implements ActionListener, MouseListener, KeyListener {
 
-    private Employees employee;
-    private EmployeesDao employeesDao;
-    private SystemView views;
-    String rol = rol_user;
-    DefaultTableModel model = new DefaultTableModel();
+    private final Employees employee;
+    private final EmployeesDao employeeDao;
+    private final SystemView views;
+    private DefaultTableModel model = new DefaultTableModel();
 
-    public EmployeesController(Employees employee, EmployeesDao employeesDao, SystemView views) {
+    public EmployeesController(Employees employee, EmployeesDao employeeDao, SystemView views) {
         this.employee = employee;
-        this.employeesDao = employeesDao;
+        this.employeeDao = employeeDao;
         this.views = views;
 
-        //Boton de registrar empleados
-        this.views.btn_colaborator_register.addActionListener(this);
+        this.views.btn_colaborador_register.addActionListener(this); 
+        this.views.btn_colaborador_update.addActionListener(this);   
+        this.views.btn_colaborador_delete.addActionListener(this);   
+        this.views.btn_colaborador_cancel.addActionListener(this);   
 
-        //Poner a la escucha la tabla
-        this.views.tb_colaborator.addMouseListener(this);
-
-        //txt buscar empleados a la escucha
-        this.views.txt_colaborator_search.addKeyListener(this);
-
-        //Boton de modificar empleados
-        this.views.btn_colaborator_modificar.addActionListener(this);
-
-        //Boton de eliminar
-        this.views.btn_colaborator_remove.addActionListener(this);
-
-        //Boton cancelar
-        this.views.btn_colaborator_cancel.addActionListener(this);
-
-        //Boton modificar contraseña
-        this.views.btn_profile_modificar.addActionListener(this);
-
-        //Colocar el label_colaborator
-        this.views.jLabelColaborator.addMouseListener(this);
+        this.views.txt_colaborador_search.addKeyListener(this);
+        this.views.tb_colaborador.addMouseListener(this);
+        this.views.jLabelColaboradores.addMouseListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == views.btn_colaborator_register) {
-            if (views.txt_colaborator_id.getText().equals("")
-                    || views.txt_colaborator_name.getText().equals("")
-                    || views.txt_colaborator_nameUser.getText().equals("")
-                    || views.txt_colaborator_address.getText().equals("")
-                    || views.txt_colaborator_phone.getText().equals("")
-                    || views.txt_colaborator_mail.getText().equals("")
-                    || views.cb_colaborator_rol.getSelectedItem().toString().equals("")
-                    || String.valueOf(views.txt_colaborator_pass.getPassword()).equals("")) {
-                JOptionPane.showMessageDialog(null, "Todos los campos son Obligatorios");
-
-            } else {
-                employee.setId(Integer.parseInt(views.txt_colaborator_id.getText().trim()));
-                employee.setFull_name(views.txt_colaborator_name.getText().trim());
-                employee.setUsername(views.txt_colaborator_nameUser.getText().trim());
-                employee.setAddress(views.txt_colaborator_address.getText().trim());
-                employee.setTelephone(views.txt_colaborator_phone.getText().trim());
-                employee.setEmail(views.txt_colaborator_mail.getText().trim());
-                employee.setPassword(String.valueOf(views.txt_colaborator_pass.getPassword()));
-                employee.setRol(views.cb_colaborator_rol.getSelectedItem().toString());
-
-                if (employeesDao.registerEmployeeQuery(employee)) {
-
-                    JOptionPane.showMessageDialog(null, "Empleado registrado con exito");
-                    cleanFields();
-                    cleanTable();
-                    listAllEmployees();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Ocurrio un error al registrar el empleado");
-                }
-            }
-        } else if (e.getSource() == views.btn_colaborator_modificar) {
-            if (views.txt_colaborator_id.getText().equals("")) {
-                JOptionPane.showMessageDialog(null, "Selecciona una fila de la tabla para continuar");
-            } else {
-                if (views.txt_colaborator_name.getText().equals("")
-                        || views.cb_colaborator_rol.getSelectedItem() == null
-                        || views.cb_colaborator_rol.getSelectedItem().toString().equals("")) {
-
-                    JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios");
-                } else {
-                    employee.setId(Integer.parseInt(views.txt_colaborator_id.getText()));
-                    employee.setFull_name(views.txt_colaborator_name.getText().trim());
-                    employee.setUsername(views.txt_colaborator_nameUser.getText().trim());
-                    employee.setAddress(views.txt_colaborator_address.getText().trim());
-                    employee.setTelephone(views.txt_colaborator_phone.getText().trim());
-                    employee.setEmail(views.txt_colaborator_mail.getText().trim());
-                    employee.setPassword(String.valueOf(views.txt_colaborator_pass.getPassword()));
-                    employee.setRol(views.cb_colaborator_rol.getSelectedItem().toString());
-                    if (employeesDao.updateEmployeeQuery(employee)) {
-                        cleanTable(); // Primero limpia los datos viejos de la tabla
-                        listAllEmployees(); // Luego carga los datos actualizados
-                        cleanFields();//Limpiar cuadro de textos formularios
-                        views.btn_category_register.setEnabled(true);
-                        JOptionPane.showMessageDialog(null, "Datos modificados exitosamente");
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Ha ocurrido un error al modificar el empleado");
-                    }
-
-                }
-            }
-        } else if (e.getSource() == views.btn_colaborator_remove) {
-            int row = views.tb_colaborator.getSelectedRow();
-            if (row == -1) {
-                JOptionPane.showMessageDialog(null, "Debes seleccionar un empleado para eliminar");
-            } else if (views.tb_colaborator.getValueAt(row, 0).equals(id_user)) {
-                JOptionPane.showMessageDialog(null, "No puedo eliminar al usuario autenticado");
-            } else {
-                int id = Integer.parseInt(views.tb_colaborator.getValueAt(row, 0).toString());
-                int question = JOptionPane.showConfirmDialog(null, "En realidad quieres eliminar el empleado");
-                if (question == 0 && employeesDao.deleteEmployeeQuery(id) != false) {
-                    cleanTable();
-                    cleanFields();
-                    views.btn_colaborator_register.setEnabled(true);
-                    views.txt_colaborator_pass.setEnabled(true);
-                    listAllEmployees();
-                    JOptionPane.showMessageDialog(null, "El usuario fue eliminado con exito");
-                }
-            }
-        } else if (e.getSource() == views.btn_colaborator_cancel) {
+        if (e.getSource() == views.btn_colaborador_register) {
+            executeRegister();
+        } else if (e.getSource() == views.btn_colaborador_update) {
+            executeUpdate();
+        } else if (e.getSource() == views.btn_colaborador_delete) {
+            executeDelete();
+        } else if (e.getSource() == views.btn_colaborador_cancel) {
             cleanFields();
-            views.btn_colaborator_register.setEnabled(true);
-            views.txt_colaborator_pass.setEnabled(true);
-            views.txt_colaborator_id.setEditable(true);
-            views.txt_colaborator_id.setEnabled(true);
-
-        } else if (e.getSource() == views.btn_profile_modificar) {
-            String password = String.valueOf(views.txt_profile_newPass.getPassword());
-            String password_confirm = String.valueOf(views.txt_profile_confirmPass.getPassword());
-            if (!password.equals("") && !password_confirm.equals("")) {
-                if (password.equals(password_confirm)) {
-                    employee.setPassword(String.valueOf(views.txt_profile_newPass.getPassword()));
-                    if (employeesDao.updateEmployeePassword(employee) != false) {
-                        JOptionPane.showMessageDialog(null, "Se modifico correctamente la contraseña");
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Ha ocurrido un error al modificar la contraseña");
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden");
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios");
-            }
+            views.btn_colaborador_register.setEnabled(true);
+            views.txt_colaborador_password.setEnabled(true);
         }
     }
 
-    //Listar todos los empleados
-    public void listAllEmployees() {
-        if (rol.equals("Administrador")) {
-            List<Employees> list = employeesDao.listEmployeesQuery(views.txt_colaborator_search.getText());
-            model = (DefaultTableModel) views.tb_colaborator.getModel();
-            Object[] row = new Object[7];
-            for (int i = 0; i < list.size(); i++) {
-                row[0] = list.get(i).getId();
-                row[1] = list.get(i).getFull_name();
-                row[2] = list.get(i).getUsername();
-                row[3] = list.get(i).getAddress();
-                row[4] = list.get(i).getTelephone();
-                row[5] = list.get(i).getEmail();
-                row[6] = list.get(i).getRol();
-                model.addRow(row);
-            }
+    private void executeRegister() {
+        if (areFieldsEmpty()) {
+            JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
+        try {
+            // Captura de la identificación desde la caja de texto del diseño
+            employee.setIdCard(Integer.parseInt(views.txt_colaborador_id_card.getText().trim()));
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "La identificación debe ser numérica.", "Error de Formato", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        employee.setFullName(views.txt_colaborador_name.getText().trim());
+        employee.setUsername(views.txt_colaborador_username.getText().trim());
+        employee.setAddress(views.txt_colaborador_address.getText().trim()); 
+        employee.setTelephone(views.txt_colaborador_telephone.getText().trim());
+        employee.setEmail(views.txt_colaborador_email.getText().trim());
+        employee.setPassword(String.valueOf(views.txt_colaborador_password.getPassword()).trim());
+        employee.setRol(views.cb_colaborador_rol.getSelectedItem().toString().trim());
+
+        if (employeeDao.registerEmployeeQuery(employee)) {
+            JOptionPane.showMessageDialog(null, "Colaborador registrado exitosamente.");
+            cleanFields();
+            listAllEmployees();
         }
     }
 
-    //Limpiar campos
-    public void cleanFields() {
-        views.txt_colaborator_id.setText("");
-        views.txt_colaborator_id.setEditable(true);
-        views.txt_colaborator_name.setText("");
-        views.txt_colaborator_nameUser.setText("");
-        views.txt_colaborator_address.setText("");
-        views.txt_colaborator_phone.setText("");
-        views.txt_colaborator_mail.setText("");
-        views.txt_colaborator_pass.setText("");
-        views.txt_colaborator_pass.setEnabled(true);
-        views.cb_colaborator_rol.setSelectedItem(0);
+    private void executeUpdate() {
+        if (views.txt_colaborador_id.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Seleccione un registro para continuar.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        if (areFieldsEmpty()) {
+            JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
+            employee.setId(Integer.parseInt(views.txt_colaborador_id.getText().trim()));
+            employee.setIdCard(Integer.parseInt(views.txt_colaborador_id_card.getText().trim()));
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Verifique los valores numéricos.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        employee.setFullName(views.txt_colaborador_name.getText().trim());
+        employee.setUsername(views.txt_colaborador_username.getText().trim());
+        employee.setAddress(views.txt_colaborador_address.getText().trim());
+        employee.setTelephone(views.txt_colaborador_telephone.getText().trim());
+        employee.setEmail(views.txt_colaborador_email.getText().trim());
+        employee.setPassword(String.valueOf(views.txt_colaborador_password.getPassword()).trim());
+        employee.setRol(views.cb_colaborador_rol.getSelectedItem().toString().trim());
+
+        if (employeeDao.updateEmployeeQuery(employee)) {
+            cleanFields();
+            listAllEmployees();
+            views.btn_colaborador_register.setEnabled(true);
+            views.txt_colaborador_password.setEnabled(true);
+            JOptionPane.showMessageDialog(null, "Datos modificados de manera correcta.");
+        }
     }
 
-    @Override
-    public void mouseClicked(java.awt.event.MouseEvent e) {
-        if (e.getSource() == views.tb_colaborator) {
-            int row = views.tb_colaborator.rowAtPoint(e.getPoint());
-            views.txt_colaborator_id.setText(views.tb_colaborator.getValueAt(row, 0).toString());
-            views.txt_colaborator_name.setText(views.tb_colaborator.getValueAt(row, 1).toString());
-            views.txt_colaborator_nameUser.setText(views.tb_colaborator.getValueAt(row, 2).toString());
-            views.txt_colaborator_address.setText(views.tb_colaborator.getValueAt(row, 3).toString());
-            views.txt_colaborator_phone.setText(views.tb_colaborator.getValueAt(row, 4).toString());
-            views.txt_colaborator_mail.setText(views.tb_colaborator.getValueAt(row, 5).toString());
-            views.cb_colaborator_rol.setSelectedItem(views.tb_colaborator.getValueAt(row, 6).toString());
-
-            views.txt_colaborator_id.setEditable(false);
-            views.txt_colaborator_pass.setEditable(false);
-            views.btn_colaborator_register.setEnabled(false);
-        } else if (e.getSource() == views.jLabelColaborator) {
-            if (rol.equals("Administrador")) {
-                views.jTabbedPane1.setSelectedIndex(4);
-                cleanTable();
+    private void executeDelete() {
+        int row = views.tb_colaborador.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(null, "Seleccione un colaborador.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        try {
+            int id = Integer.parseInt(views.tb_colaborador.getValueAt(row, 0).toString());
+            if (id == EmployeesDao.id_user) {
+                JOptionPane.showMessageDialog(null, "No puedes eliminar tu propio usuario en sesión.", "Restricción", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            int question = JOptionPane.showConfirmDialog(null, "¿Eliminar este colaborador?", "Confirmar", JOptionPane.YES_NO_OPTION);
+            if (question == JOptionPane.YES_OPTION && employeeDao.deleteEmployeeQuery(id)) {
                 cleanFields();
                 listAllEmployees();
-            } else {
-                views.jTabbedPane1.setEnabledAt(4, false);
-                views.jLabelColaborator.setEnabled(false);
-                JOptionPane.showMessageDialog(null, "No tienes privilegios de Administrador");
+                views.btn_colaborador_register.setEnabled(true);
+                JOptionPane.showMessageDialog(null, "Colaborador eliminado.");
             }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Error de ID.");
         }
     }
 
-    @Override
-    public void mousePressed(java.awt.event.MouseEvent e) {
+    private boolean areFieldsEmpty() {
+        return views.txt_colaborador_id_card.getText().trim().isEmpty()
+                || views.txt_colaborador_name.getText().trim().isEmpty()
+                || views.txt_colaborador_username.getText().trim().isEmpty()
+                || views.txt_colaborador_address.getText().trim().isEmpty()
+                || views.txt_colaborador_telephone.getText().trim().isEmpty()
+                || views.txt_colaborador_email.getText().trim().isEmpty();
+                
+    }
+
+    public void cleanFields() {
+        views.txt_colaborador_id.setText("");
+        views.txt_colaborador_id_card.setText("");
+        views.txt_colaborador_name.setText("");
+        views.txt_colaborador_username.setText("");
+        views.txt_colaborador_address.setText("");
+        views.txt_colaborador_telephone.setText("");
+        views.txt_colaborador_email.setText("");
+        views.txt_colaborador_password.setText("");
+    }
+
+    public void listAllEmployees() {
+        List<Employees> list = employeeDao.listEmployeesQuery(views.txt_colaborador_search.getText().trim());
+        model = (DefaultTableModel) views.tb_colaborador.getModel();
+        model.setRowCount(0);
+        for (Employees emp : list) {
+            Object[] row = new Object[8];
+            row[0] = emp.getId();
+            row[1] = emp.getIdCard(); // Agregado a la grilla visual de la tabla
+            row[2] = emp.getFullName();
+            row[3] = emp.getUsername();
+            row[4] = emp.getAddress();
+            row[5] = emp.getTelephone();
+            row[6] = emp.getEmail();
+            row[7] = emp.getRol();
+            model.addRow(row);
+        }
+        views.tb_colaborador.setModel(model);
     }
 
     @Override
-    public void mouseReleased(java.awt.event.MouseEvent e) {
-    }
-
-    @Override
-    public void mouseEntered(java.awt.event.MouseEvent e) {
-    }
-
-    @Override
-    public void mouseExited(java.awt.event.MouseEvent e) {
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        if (e.getSource() == views.txt_colaborator_search) {
-            cleanTable();
+    public void mouseClicked(MouseEvent e) {
+        if (e.getSource() == views.tb_colaborador) {
+            int row = views.tb_colaborador.getSelectedRow();
+            if (row != -1) {
+                views.txt_colaborador_id.setText(views.tb_colaborador.getValueAt( row, 0).toString());
+                views.txt_colaborador_id_card.setText(views.tb_colaborador.getValueAt(row, 1).toString());
+                views.txt_colaborador_name.setText(views.tb_colaborador.getValueAt(row, 2).toString());
+                views.txt_colaborador_username.setText(views.tb_colaborador.getValueAt(row, 3).toString());
+                views.txt_colaborador_address.setText(views.tb_colaborador.getValueAt(row, 4).toString());
+                views.txt_colaborador_telephone.setText(views.tb_colaborador.getValueAt(row, 5).toString());
+                views.txt_colaborador_email.setText(views.tb_colaborador.getValueAt(row, 6).toString());
+                views.cb_colaborador_rol.setSelectedItem(views.tb_colaborador.getValueAt(row, 7).toString());
+                
+                views.btn_colaborador_register.setEnabled(false);
+                views.txt_colaborador_password.setEnabled(false); 
+            }
+        } else if (e.getSource() == views.jLabelColaboradores) {
+            views.jTabbedPane1.setSelectedIndex(4);
             listAllEmployees();
-
         }
     }
 
-    //Limpiar Tabla
-    public void cleanTable() {
-        for (int i = 0; i < model.getRowCount(); i++) {
-            model.removeRow(i);
-            i = i - 1;
-        }
-
+    @Override public void keyReleased(KeyEvent e) {
+        if (e.getSource() == views.txt_colaborador_search) { listAllEmployees(); }
     }
 
+    @Override public void mousePressed(MouseEvent e) {}
+    @Override public void mouseReleased(MouseEvent e) {}
+    @Override public void mouseEntered(MouseEvent e) {}
+    @Override public void mouseExited(MouseEvent e) {}
+    @Override public void keyTyped(KeyEvent e) {}
+    @Override public void keyPressed(KeyEvent e) {}
 }

@@ -1,273 +1,320 @@
 package Controllers;
 
 import Models.DynamicCb;
-import Models.EmployeesDao;
-import static Models.EmployeesDao.id_user;
-import static Models.EmployeesDao.rol_user;
 import Models.ProductDao;
 import Models.Products;
-import Models.Purchases;
 import Models.PurchasesDao;
 import Models.Suppliers;
 import Models.SuppliersDao;
-import Views.Print;
 import Views.SystemView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import Models.PurchaseDetail;
+import Models.Purchases;
+import Views.Print;
 
-public class PurchasesController implements ActionListener, MouseListener, KeyListener {
+public class PurchasesController implements ActionListener, MouseListener {
 
-    private Purchases purchase;
-    private PurchasesDao purchaseDao;
-    private SuppliersDao supplierDao;
-    private SystemView views;
-    Products product = new Products();
-    ProductDao productDao = new ProductDao();
-    String rol = rol_user;
-    private int getIdSupplier = 0;
-    private int item = 0;
-    DefaultTableModel model = new DefaultTableModel();
-    DefaultTableModel temp;
+    private final Purchases purchase;
+    private final PurchasesDao purchaseDao;
+    private final ProductDao productDao;
+    private final SystemView views;
 
-    public PurchasesController(Purchases purchase, PurchasesDao purchaseDao, SystemView views, SuppliersDao supplierDao) {
+    // Modelo para controlar el carrito de compras en tu JTable
+    private List<PurchaseDetail> carList = new ArrayList<>();
+
+    private DefaultTableModel tempModel;
+    private double totalPay = 0.00;
+
+    public PurchasesController(Purchases purchase, PurchasesDao purchaseDao, ProductDao productDao, SystemView views) {
         this.purchase = purchase;
         this.purchaseDao = purchaseDao;
+        this.productDao = productDao;
         this.views = views;
-        this.supplierDao = supplierDao;
 
-        this.views.txt_purchase_productCode.addKeyListener(this);
-        this.views.txt_purchase_precioCompra.addKeyListener(this);
-        //Agregar
-        this.views.btn_purchase_add_product_buy.addActionListener(this);
-        //Comprar
-        this.views.btn_purchase_confirm.addActionListener(this);
-        getSupplierName();
-        //Eliminar
-        this.views.btn_purchase_remove.addActionListener(this);
-        //nuevo
-        this.views.btn_purchase_new.addActionListener(this);
-        //label compras
+        // Escuchadores para los 4 botones de acción de tu vista
+        this.views.btn_purchase_add.addActionListener(this);       // Botón "Agregar"
+        this.views.btn_purchase_buy.addActionListener(this);       // Botón "Comprar"
+        this.views.btn_purchase_delete.addActionListener(this);    // Botón "Eliminar"
+        this.views.btn_purchase_new.addActionListener(this);       // Botón "Nuevo"
+
+        // Escuchador para buscar al dar ENTER en la caja de código de producto
+        this.views.txt_purchase_productCode.addActionListener(this);
+
+        // ¡Mejora!: Carga los proveedores apenas arranca la pantalla
+        cargarSupplierPurchase();
+        calcularSubtotalDinamico();
+
         this.views.jLabelPurchases.addMouseListener(this);
-        //label reports
-        this.views.jLabelReports.addMouseListener(this);
-
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == views.btn_purchase_add_product_buy) {
+        if (e.getSource() == views.txt_purchase_productCode) {
+            searchProductByCode();
+        } else if (e.getSource() == views.btn_purchase_add) {
+            addProductToTable();
+        } else if (e.getSource() == views.btn_purchase_delete) {
+            removeProductFromTable();
+        } else if (e.getSource() == views.btn_purchase_buy) {
+            processFinalPurchase();
+        } else if (e.getSource() == views.btn_purchase_new) {
+            cleanFields();
+            cleanTemporaryTable();
+        }
+    }
 
-            // 1. Obtener el índice seleccionado en el ComboBox
-            int selectedIndex = views.cb_purchase_proveedor.getSelectedIndex();
+    public void calcularSubtotalDinamico() {
+        java.awt.event.KeyAdapter calcularEvent = new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyReleased(java.awt.event.KeyEvent e) {
+                try {
+                    String qtyStr = views.txt_purchase_quantity.getText().trim();
+                    String priceStr = views.txt_purchase_price.getText().trim();
 
-            // 2. Validar que realmente haya un elemento seleccionado (índice 0 o superior)
-            if (selectedIndex >= 0) {
+                    // Si ambos campos tienen números, calculamos de inmediato
+                    if (!qtyStr.isEmpty() && !priceStr.isEmpty()) {
+                        int qty = Integer.parseInt(qtyStr);
+                        double price = Double.parseDouble(priceStr);
+                        double subtotal = qty * price;
 
-                // 3. Extraer el objeto real directamente desde el modelo del ComboBox
-                Object selectSupplier = views.cb_purchase_proveedor.getItemAt(selectedIndex);
-
-                // Impresiones de depuración seguras en consola
-                if (selectSupplier != null) {
-                    System.out.println("TIPO DE OBJETO DETECTADO: " + selectSupplier.getClass().getName());
-                    System.out.println("VALOR REAL DENTRO: " + selectSupplier.toString());
-                }
-
-                // 4. Validar si el objeto recuperado es una instancia de tu clase DynamicCb
-                if (selectSupplier instanceof DynamicCb) {
-                    DynamicCb supplier_cb = (DynamicCb) selectSupplier;
-                    int supplier_id = supplier_cb.getId();
-
-                    if (getIdSupplier == 0) {
-                        getIdSupplier = supplier_id;
+                        // Pintar el resultado en el campo gris de la interfaz
+                        views.txt_purchase_subtotal.setText(String.valueOf(subtotal));
                     } else {
-                        if (getIdSupplier != supplier_id) {
-                            JOptionPane.showMessageDialog(null, "No puede realizar una misma compra con varios proveedores");
-                            return;
-                        }
+                        views.txt_purchase_subtotal.setText(""); // Limpiar si borran los datos
                     }
-
-                    int amount = Integer.parseInt(views.txt_purchase_cantidad.getText());
-                    String product_name = views.txt_purchase_productName.getText();
-                    double price = Double.parseDouble(views.txt_purchase_precioCompra.getText());
-                    int purchase_id = Integer.parseInt(views.txt_purchase_id.getText());
-
-                    String supplier_name = supplier_cb.getName();
-
-                    if (amount > 0) {
-                        temp = (DefaultTableModel) views.tb_purchases.getModel();
-                        for (int i = 0; i < views.tb_purchases.getRowCount(); i++) {
-                            if (views.tb_purchases.getValueAt(i, 1).equals(views.txt_purchase_productName.getText())) {
-                                JOptionPane.showMessageDialog(null, "El producto ya esta registrado en la tabla de compras");
-                                return;
-                            }
-                        }
-
-                        ArrayList list = new ArrayList();
-                        item = 1;
-                        list.add(item);
-                        list.add(purchase_id);
-                        list.add(product_name);
-                        list.add(amount);
-                        list.add(price);
-                        list.add(amount * price);
-                        list.add(supplier_name);
-
-                        Object[] obj = new Object[6];
-                        obj[0] = list.get(1);
-                        obj[1] = list.get(2);
-                        obj[2] = list.get(3);
-                        obj[3] = list.get(4);
-                        obj[4] = list.get(5);
-                        obj[5] = list.get(6);
-
-                        temp.addRow(obj);
-                        views.tb_purchases.setModel(temp);
-                        cleanFieldsPurchases();
-                        views.cb_purchase_proveedor.setEditable(false);
-                        views.txt_purchase_productCode.requestFocus();
-                        calculatePurchase();
-                    }
-                } else {
-                    // Se ejecuta si el objeto dentro del ComboBox no es un DynamicCb
-                    JOptionPane.showMessageDialog(null, "Por favor, seleccione un proveedor valido");
+                } catch (NumberFormatException ex) {
+                    views.txt_purchase_subtotal.setText(""); // Evitar que explote si escriben letras
                 }
+            }
+        };
+
+        // Amarrar el evento a los dos cuadros de texto de la vista
+        views.txt_purchase_quantity.addKeyListener(calcularEvent);
+        views.txt_purchase_price.addKeyListener(calcularEvent);
+    }
+
+    // 1. Busca el medicamento automáticamente al dar ENTER en el código
+    private void searchProductByCode() {
+        if (views.txt_purchase_productCode.getText().trim().isEmpty()) {
+            return;
+        }
+
+        try {
+            int code = Integer.parseInt(views.txt_purchase_productCode.getText().trim());
+            Products prod = productDao.searchCode(code);
+            if (prod.getName() != null) {
+                views.txt_purchase_productName.setText(prod.getName());
+                views.txt_purchase_id_product.setText(String.valueOf(prod.getId()));
+                views.txt_purchase_quantity.requestFocus(); // Pasa el cursor al precio de compra
             } else {
-                // Se ejecuta si el ComboBox está vacío o no hay nada seleccionado (índice -1)
-                JOptionPane.showMessageDialog(null, "Por favor, seleccione un proveedor de la lista");
+                JOptionPane.showMessageDialog(null, "El producto no está registrado en el inventario.", "Advertencia", JOptionPane.WARNING_MESSAGE);
             }
-        } else if (e.getSource() == views.btn_purchase_confirm) {
-            insertPurchase();
-        } else if (e.getSource() == views.btn_purchase_remove) {
-            model = (DefaultTableModel) views.tb_purchases.getModel();
-            model.removeRow(views.tb_purchases.getSelectedRow());
-            calculatePurchase();
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "El código debe ser un valor numérico.", "Error de formato", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    // 2. Botón "Agregar": Calcula el subtotal en caliente y monta la fila en la tabla visual
+    private void addProductToTable() {
+        if (areFieldsEmpty()) {
+            JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios para agregar un producto.", "Campos Vacíos", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
+            int code = Integer.parseInt(views.txt_purchase_productCode.getText().trim());
+            int id = Integer.parseInt(views.txt_purchase_id_product.getText().trim());
+            String name = views.txt_purchase_productName.getText().trim();
+            int qty = Integer.parseInt(views.txt_purchase_quantity.getText().trim());
+            double price = Double.parseDouble(views.txt_purchase_price.getText().trim());
+
+            // Captura del ComboBox dinámico de proveedores
+            DynamicCb supplierCb = (DynamicCb) views.cb_purchase_supplier.getSelectedItem();
+            String supplierName = supplierCb.getName();
+
+            // Lógica Limpia: Cálculo del Subtotal de la fila
+            double subTotal = qty * price;
+            views.txt_purchase_subtotal.setText(String.valueOf(subTotal));
+
+            PurchaseDetail detail = new PurchaseDetail();
+            detail.setProductCode(code);   // Usamos el código único del producto (barcode)
+            detail.setProductName(name);   // Nombre auxiliar
+            detail.setQuantity(qty);       // Cantidad a comprar
+            detail.setPrice(price);         // Precio pactado
+            detail.setSubtotal(subTotal);   // Subtotal de la fila
+            carList.add(detail);           // Se guarda en el carrito temporal en memoria
+
+            tempModel = (DefaultTableModel) views.tb_purchase.getModel();
+
+            // Agregar la fila al JTable (Id, Nombre, Cantidad, Precio, SubTotal, Proveedor)
+            Object[] row = new Object[6];
+            row[0] = id;
+            row[1] = name;
+            row[2] = qty;
+            row[3] = price;
+            row[4] = subTotal;
+            row[5] = supplierName;
+            tempModel.addRow(row);
+
+            // Recalcular dinámicamente el "Total a Pagar" acumulado abajo
+            calculateTotalPay();
+            cleanFields();
             views.txt_purchase_productCode.requestFocus();
-        }else if(e.getSource()==views.btn_purchase_new){
-           cleanTableTemp();
-           cleanFieldsPurchases();
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Verifique los datos numéricos de cantidad o precio.", "Error de Formato", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    
-    
-    //listar compras en la tabla de reportes
-    public void listAllPurchases(){
-      if(rol.equals("Administrador")||rol.equals("Auxiliar")){
-          List<Purchases>list=purchaseDao.listAllPurchasesQuery();
-          model = (DefaultTableModel) views.tb_reports_purchase.getModel();
-          Object[] row = new Object[4];
-          for(int i =0; i< list.size(); i++){
-              row[0] = list.get(i).getId();
-              row[1] = list.get(i).getSupplier_name_product();
-              row[2] = list.get(i).getTotal();
-              row[3] = list.get(i).getCreated();
-              model.addRow(row);
-          }
-          views.tb_reports_purchase.setModel(model);
-      }  
-        
+    // 3. Botón "Eliminar": Remueve la fila que el usuario seleccionó con el mouse
+    private void removeProductFromTable() {
+        tempModel = (DefaultTableModel) views.tb_purchase.getModel();
+        int row = views.tb_purchase.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(null, "Seleccione un producto de la tabla para eliminarlo.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        tempModel.removeRow(row);
+        calculateTotalPay(); // Resta el subtotal eliminado del "Total a Pagar"
     }
-    
-    //Limpiar la tabla de agregar productos
-    public void cleanTableTemp() {
-        for (int i = 0; i < temp.getRowCount(); i++) {
-            temp.removeRow(i);
-            i = i - 1;
+
+    // 4. Botón "Comprar": Procesa de forma masiva todas las filas de la tabla en MySQL con camelCase estricto
+    private void processFinalPurchase() {
+        int rowsCount = views.tb_purchase.getRowCount();
+        if (rowsCount == 0) {
+            JOptionPane.showMessageDialog(null, "No hay productos en la tabla para procesar la compra.", "Carrito Vacío", JOptionPane.WARNING_MESSAGE);
+            return;
         }
 
-    }
+        DynamicCb supplierCb = (DynamicCb) views.cb_purchase_supplier.getSelectedItem();
+        int supplierId = supplierCb.getId();
 
-    //Inserta la compra BD
-    private void insertPurchase() {
-        double total = Double.parseDouble(views.txt_purchase_totalPagar.getText());
-        int employee_id = id_user;
-        if (purchaseDao.registerPurchaseQuery(getIdSupplier, employee_id, total)) {
-            int purchase_id = purchaseDao.purchaseId();
-            for (int i = 0; i < views.tb_purchases.getRowCount(); i++) {
-                int product_id = Integer.parseInt(views.tb_purchases.getValueAt(i, 0).toString());
-                int purchase_amount = Integer.parseInt(views.tb_purchases.getValueAt(i, 2).toString());
-                double purchase_price = Double.parseDouble(views.tb_purchases.getValueAt(i, 3).toString());
-                double purchase_subTotal = purchase_price * purchase_amount;
-                purchaseDao.registerPurchaseDetailQuery(purchase_id, purchase_price, purchase_amount, purchase_subTotal, product_id);
-                product= productDao.searchId(product_id);
-                int amount = product.getProduct_quantity()+purchase_amount;
-                productDao.updateStockQuery(amount, product_id);
+        int employeeId = Integer.parseInt(views.txt_profile_id.getText().trim());
+
+        double totalGeneral = 0;
+        List<PurchaseDetail> detailsList = new ArrayList<>();
+
+        // Bucle para recorrer la lista de compras temporal de tu vista
+        for (int i = 0; i < rowsCount; i++) {
+            int productId = Integer.parseInt(views.tb_purchase.getValueAt(i, 0).toString());
+            String productName = views.tb_purchase.getValueAt(i, 1).toString();
+            int qty = Integer.parseInt(views.tb_purchase.getValueAt(i, 2).toString());
+            double price = Double.parseDouble(views.tb_purchase.getValueAt(i, 3).toString());
+            double subTotal = Double.parseDouble(views.tb_purchase.getValueAt(i, 4).toString());
+
+            totalGeneral += subTotal;
+
+            // Instancia limpia mapeada con la nomenclatura camelCase de tu Purchases.java
+            PurchaseDetail detail = new PurchaseDetail();
+            detail.setProductCode(productId);
+            detail.setProductName(productName);
+            detail.setQuantity(qty);
+            detail.setPrice(price);
+            detail.setSubtotal(subTotal);
+
+            detailsList.add(detail);
+
+        }
+
+        Purchases pur = new Purchases();
+        pur.setTotal(totalGeneral);
+        pur.setSupplierId(supplierId);
+        pur.setEmployeeId(employeeId);
+
+        // 1. Registrar histórico en la tabla 'purchases'
+        if (purchaseDao.registerPurchaseQuery(pur, detailsList)) {
+
+            for (PurchaseDetail detail : detailsList) {
+                Products currenProd = productDao.searchId(detail.getProductCode());
+                if (currenProd != null) {
+                    int updatedStock = currenProd.getProductQuantity() + detail.getQuantity();
+                    productDao.updateStockQuery(updatedStock, detail.getProductCode());
+                }
             }
-            cleanTableTemp();
-            JOptionPane.showMessageDialog(null, "Compra generada con exito");
-            cleanFieldsPurchases();
-            Print print = new Print(purchase_id);
+            pur.setSupplierName(views.cb_purchase_supplier.getSelectedItem().toString());
+            pur.setEmployeeName(views.txt_profile_name.getText()); // <-- Reemplaza por el JTextField real que tenga el NOMBRE del empleado
+            pur.setCreated(new java.sql.Timestamp(new java.util.Date().getTime()).toString());
+            JOptionPane.showMessageDialog(null, "¡La compra masiva se procesó con éxito y el inventario fue actualizado!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            cleanFields();
+            cleanTemporaryTable();
+            Print print = new Print(pur.getId(), pur);
             print.setVisible(true);
-            
+
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo procesar la compra. Transacción cancelada.", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
     }
+    // Método de soporte matemático para totalizar la columna de subtotales
 
-    //Limpiar cuadros de texto
-    public void cleanFieldsPurchases() {
-        views.txt_purchase_productName.setText("");
-        views.txt_purchase_precioCompra.setText("");
-        views.txt_purchase_cantidad.setText("");
+    private void calculateTotalPay() {
+        totalPay = 0.00;
+        int rowsCount = views.tb_purchase.getRowCount();
+        for (int i = 0; i < rowsCount; i++) {
+            totalPay += Double.parseDouble(views.tb_purchase.getValueAt(i, 4).toString());
+        }
+        views.txt_purchase_total_to_pay.setText(String.valueOf(totalPay));
+    }
+
+    // Validador con .trim().isEmpty() optimizado
+    private boolean areFieldsEmpty() {
+        return views.txt_purchase_productCode.getText().trim().isEmpty()
+                || views.txt_purchase_quantity.getText().trim().isEmpty()
+                || views.txt_purchase_price.getText().trim().isEmpty()
+                || views.cb_purchase_supplier.getSelectedItem() == null;
+    }
+
+    public void cleanFields() {
         views.txt_purchase_productCode.setText("");
-        views.txt_purchase_subTotal.setText("");
-        views.txt_purchase_id.setText("");
-        views.txt_purchase_totalPagar.setText("");
+        views.txt_purchase_productName.setText("");
+        views.txt_purchase_quantity.setText("");
+        views.txt_purchase_price.setText("");
+        views.txt_purchase_subtotal.setText("");
+        views.txt_purchase_id_product.setText("");
     }
 
-    //valor precio total compra
-    public void calculatePurchase() {
-
-        double total = 0;
-        int numRow = views.tb_purchases.getRowCount();
-        for (int i = 0; i < numRow; i++) {
-            total = total + Double.parseDouble(String.valueOf(views.tb_purchases.getValueAt(i, 4)));
-        }
-        views.txt_purchase_totalPagar.setText("" + total);
-
+    public void cleanTemporaryTable() {
+        tempModel = (DefaultTableModel) views.tb_purchase.getModel();
+        tempModel.setRowCount(0);
+        views.txt_purchase_total_to_pay.setText("0.0");
     }
 
-    //Mostrar nombre de los proveedores
-    public void getSupplierName() {
-        views.cb_purchase_proveedor.removeAllItems();
-        List<Suppliers> list = supplierDao.listSuppliersQuery((views.txt_suplimers_search.getText()));
-        for (int i = 0; i < list.size(); i++) {
-            int id = list.get(i).getId();
-            String name = list.get(i).getName();
-            views.cb_purchase_proveedor.addItem(new DynamicCb(id, name));
-        }
-    }
-    
-    //Limpiar tabla reportes
-    public void cleanTable(){
-        for(int i=0; i<model.getRowCount();i++){
-            model.removeRow(i);
-            i=i-1;
+    public void cargarSupplierPurchase() {
+        // 1. Instanciamos el DAO de proveedores para consultar la base de datos
+        Models.SuppliersDao supplierDao = new Models.SuppliersDao();
+
+        // 2. Limpiamos el ComboBox de la interfaz visual para no duplicar elementos antiguos
+        views.cb_purchase_supplier.removeAllItems();
+
+        // 3. Traemos la lista fresca de proveedores directamente de MySQL (enviando "" para traerlos todos)
+        List<Suppliers> listaProveedores = supplierDao.listSuppliersQuery("");
+
+        // 4. Recorremos la lista con un bucle For-Each moderno
+        for (Suppliers sup : listaProveedores) {
+            // Envolvemos el ID y el Nombre del proveedor dentro de tu objeto DynamicCb
+            DynamicCb itemCombo = new DynamicCb(sup.getId(), sup.getName());
+
+            // Agregamos el objeto dinámico directamente al ComboBox de tu SystemView
+            views.cb_purchase_supplier.addItem(itemCombo);
         }
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if(e.getSource()==views.jLabelPurchases){
-            if(rol.equals("Administrador")){
-                views.jTabbedPane1.setSelectedIndex(1);
-                cleanTableTemp();
-            }else{
-                views.jTabbedPane1.setEnabledAt(1, false);
-                views.jLabelPurchases.setEnabled(false);
-                JOptionPane.showMessageDialog(null, "No tienes permiso de administrador");
-            }
-        }else if(e.getSource()==views.jLabelReports){
-            views.jTabbedPane1.setSelectedIndex(7);
-            cleanTable();
-            listAllPurchases();
+        if (e.getSource() == views.jLabelPurchases) {
+            views.jTabbedPane1.setSelectedIndex(1); // Cambia al índice de tu pestaña de compras
+
+            // ¡Mejora!: Vuelve a consultar MySQL para traer proveedores nuevos en caliente
+            cargarSupplierPurchase();
+            cleanTemporaryTable();
+
         }
     }
 
@@ -286,44 +333,4 @@ public class PurchasesController implements ActionListener, MouseListener, KeyLi
     @Override
     public void mouseExited(MouseEvent e) {
     }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        if (e.getSource() == views.txt_purchase_productCode) {
-            if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                if (views.txt_purchase_productCode.getText().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Ingrese el codigo del producto");
-                } else {
-                    int id = Integer.parseInt(views.txt_purchase_productCode.getText());
-                    product = productDao.searchCode(id);
-                    views.txt_purchase_productName.setText("" + product.getName());
-                    views.txt_purchase_id.setText("" + product.getId());
-                    views.txt_purchase_cantidad.requestFocus();
-
-                }
-            }
-        }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-
-        if (e.getSource() == views.txt_purchase_precioCompra) {
-            int quatity;
-            double price = 0.0;
-            if (views.txt_purchase_cantidad.getText().equals("")) {
-                quatity = 1;
-                views.txt_purchase_precioCompra.setText("" + price);
-            } else {
-                quatity = Integer.parseInt(views.txt_purchase_cantidad.getText());
-                price = Double.parseDouble(views.txt_purchase_precioCompra.getText());
-                views.txt_purchase_subTotal.setText("" + quatity * price);
-            }
-        }
-    }
-
 }

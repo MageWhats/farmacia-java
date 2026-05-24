@@ -1,112 +1,106 @@
 package Models;
 
-import java.sql.Timestamp;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 
 public class SalesDao {
-    //Instanciar conexion BD
 
-    ConnectionMySQL cn = new ConnectionMySQL();
-    Connection conn;
-    PreparedStatement pst;
-    ResultSet rs;
+    private final ConnectionMySQL cn = new ConnectionMySQL();
 
-    //Registrar venta
-    public boolean registerSaleQuery(int customer_id, int employee_id, double total) {
-        String query = "INSERT INTO sales (customer_id, employee_id, total, sale_date) VALUES (?,?,?,?)";
-
+    // 1. Registrar el encabezado de la venta (La Factura General)
+    public boolean registerSaleQuery(Sales sale) {
+        String query = "INSERT INTO sales (customer_id, employee_id, total, sale_date) VALUES (?, ?, ?, ?)";
         Timestamp dateTime = new Timestamp(new Date().getTime());
 
-        try {
-            conn = cn.getConnection();
-            pst = conn.prepareStatement(query);
-            pst.setInt(1, customer_id);
-            pst.setInt(2, employee_id);
-            pst.setDouble(3, total);
+        try (Connection conn = cn.getConnection();
+             PreparedStatement pst = conn.prepareStatement(query)) {
+
+            pst.setInt(1, sale.getCustomerId());
+            pst.setInt(2, sale.getEmployeeId());
+            pst.setDouble(3, sale.getTotalToPay());
             pst.setTimestamp(4, dateTime);
+
             pst.execute();
             return true;
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-            return false;
-        }
-
-    }
-
-    //Registrar detalles de venta
-    public boolean registerSaleDetailsQuery(int product_id, double sale_id, int sale_quantity, double sale_price, double sale_subtotal) {
-
-        String query = "INSERT INTO sales_details (product_id, sale_id, sale_quantity, sale_price, sale_subtotal)VALUES(?,?,?,?,?)";
-        Timestamp dateTime = new Timestamp(new Date().getTime());
-
-        try {
-            conn = cn.getConnection();
-            pst = conn.prepareStatement(query);
-            pst.setInt(1, product_id);
-            pst.setDouble(2, sale_id);
-            pst.setInt(3, sale_quantity);
-            pst.setDouble(4, sale_price);
-            pst.setDouble(5, sale_subtotal);
-            pst.execute();
-            return true;
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.toString());
+            JOptionPane.showMessageDialog(null, "Error al registrar la cabecera de la venta: " + e.getMessage(), "Error SQL", JOptionPane.ERROR_MESSAGE);
             return false;
         }
     }
 
-    //Obtener ID de la venta
-    public int saleID() {
-        int id = 0;
+    // 2. Registrar el Detalle de la Venta (Fila por fila del carrito de compras temporal)
+    // El 'saleId' se obtiene consultando el último ID de factura generado en la tabla 'sales'
+    public boolean registerSaleDetailQuery(int saleId, int productId, int quantity, double price, double subtotal) {
+        String query = "INSERT INTO sales_details (sale_id, product_id, sale_quantity, sale_price, sale_subtotal) VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection conn = cn.getConnection();
+             PreparedStatement pst = conn.prepareStatement(query)) {
+
+            pst.setInt(1, saleId);
+            pst.setInt(2, productId);
+            pst.setInt(3, quantity);
+            pst.setDouble(4, price);
+            pst.setDouble(5, subtotal);
+
+            pst.execute();
+            return true;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al registrar el detalle del medicamento: " + e.getMessage(), "Error SQL", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+
+    // 3. Obtener el ID de la última venta realizada (Para poder enlazarla con sus detalles correspondientes)
+    public int getLastSaleId() {
         String query = "SELECT MAX(id) AS id FROM sales";
+        int lastId = 0;
 
-        try {
-            conn = cn.getConnection();
-            pst = conn.prepareStatement(query);
-            rs = pst.executeQuery();
+        try (Connection conn = cn.getConnection();
+             PreparedStatement pst = conn.prepareStatement(query);
+             ResultSet rs = pst.executeQuery()) {
 
             if (rs.next()) {
-                id = rs.getInt("id");
+                lastId = rs.getInt("id");
             }
         } catch (SQLException e) {
-            System.err.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al obtener identificador de factura: " + e.getMessage(), "Error SQL", JOptionPane.ERROR_MESSAGE);
         }
-        return id;
+        return lastId;
     }
 
-    //Listar todas las ventas realizadas
-    public List listAllSalesQuery() {
-        List<Sales> list_sales = new ArrayList();
-        String query = "SELECT s.id AS invoice, c.full_name AS customer, e.full_name as employee,"
-                + "s.total, s.sale_date from sales s inner join customers c on s.customer_id = c.id inner join"
-                + " employees e on s.employee_id = e.id order by s.id ASC";
+    // 4. Listar Historial Completo de Ventas (Con INNER JOIN para traer los nombres reales del Cliente y Cajero)
+    public List<Sales> listAllSalesQuery() {
+        List<Sales> listSales = new ArrayList<>();
+        String query = "SELECT s.*, c.full_name AS customer_name, e.full_name AS employee_name FROM sales s "
+                     + "INNER JOIN customers c ON s.customer_id = c.id "
+                     + "INNER JOIN employees e ON s.employee_id = e.id ORDER BY s.id DESC";
 
-        try {
-            conn = cn.getConnection();
-            pst = conn.prepareStatement(query);
-            rs = pst.executeQuery();
+        try (Connection conn = cn.getConnection();
+             PreparedStatement pst = conn.prepareStatement(query);
+             ResultSet rs = pst.executeQuery()) {
 
             while (rs.next()) {
                 Sales sale = new Sales();
-                sale.setId(rs.getInt("invoice"));
-                sale.setCustomer_name(rs.getString("customer"));
-                sale.setEmployee_name(rs.getString("employee"));
-                sale.setTotal_to_pay(rs.getDouble("total"));
-                sale.setSale_date(rs.getString("sale_date"));
-                list_sales.add(sale);
-
+                sale.setId(rs.getInt("id"));
+                sale.setCustomerId(rs.getInt("customer_id"));
+                sale.setEmployeeId(rs.getInt("employee_id"));
+                sale.setTotalToPay(rs.getDouble("total"));
+                sale.setSaleDate(rs.getTimestamp("sale_date").toString());
+                sale.setCustomerName(rs.getString("customer_name"));
+                sale.setEmployeeName(rs.getString("employee_name"));
+                
+                listSales.add(sale);
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.toString());
+            JOptionPane.showMessageDialog(null, "Error al desplegar el historial de facturación: " + e.getMessage(), "Error SQL", JOptionPane.ERROR_MESSAGE);
         }
-        return list_sales;
+        return listSales;
     }
-
 }

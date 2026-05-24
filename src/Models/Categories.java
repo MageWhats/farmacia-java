@@ -1,24 +1,25 @@
 
 package Models;
 
-
 public class Categories {
-    //Creacion de variables
     private int id;
-    private String name;
-    private String created;
-    private String Update;
+    private String name;         // Nombre de la categoría (ej. Antibióticos)
+    private String created;      // Fecha de creación en MySQL
+    private String updated;      // Fecha de última modificación
 
+    // Constructor vacío obligatorio para frameworks y manipulación limpia
     public Categories() {
     }
 
-    public Categories(int id, String name, String created, String Update) {
+    // Constructor completo optimizado
+    public Categories(int id, String name, String created, String updated) {
         this.id = id;
         this.name = name;
         this.created = created;
-        this.Update = Update;
+        this.updated = updated;
     }
 
+    // Getters y Setters limpios
     public int getId() {
         return id;
     }
@@ -43,12 +44,11 @@ public class Categories {
         this.created = created;
     }
 
-    public String getUpdate() {
-        return Update;
+    public String getUpdated() {
+        return updated;
     }
 
-    public void setUpdate(String Update) {
-        this.Update = Update;
+    public void setUpdated(String updated) {
+        this.updated = updated;
     }
-    
 }

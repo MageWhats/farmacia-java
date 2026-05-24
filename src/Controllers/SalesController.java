@@ -2,8 +2,7 @@ package Controllers;
 
 import Models.Customers;
 import Models.CustomersDao;
-import Models.EmployeesDao;
-import static Models.EmployeesDao.rol_user;
+import Models.Employees;
 import Models.ProductDao;
 import Models.Products;
 import Models.Sales;
@@ -15,208 +14,254 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class SalesController implements ActionListener, MouseListener, KeyListener {
+public class SalesController implements ActionListener, KeyListener, MouseListener {
 
-    private Sales sale;
-    private SalesDao saleDao;
-    private SystemView views;
-    Products product = new Products();
-    ProductDao productDao = new ProductDao();
-    Customers customer = new Customers();
-    CustomersDao customerDao = new CustomersDao();
+    private final Sales sale;
+    private final SalesDao saleDao;
+    private final ProductDao productDao;
+    private final SystemView views;
+    private final CustomersDao customerDao;
+    
+    private DefaultTableModel tempModel;
+    private double totalPay = 0.00;
 
-    private int item = 0;
-    String rol = rol_user;
-
-    DefaultTableModel model = new DefaultTableModel();
-    DefaultTableModel temp;
-
-    public SalesController(Sales sale, SalesDao saleDao, SystemView views) {
+    public SalesController(Sales sale, SalesDao saleDao, ProductDao productDao, SystemView views,CustomersDao customerDao) {
         this.sale = sale;
         this.saleDao = saleDao;
+        this.productDao = productDao;
         this.views = views;
+        this.customerDao = customerDao;
 
-        //Llamar a la escucha botones
-        this.views.btn_sales_add.addActionListener(this);
-        this.views.btn_sales_new.addActionListener(this);
-        this.views.btn_sales_remove.addActionListener(this);
-        this.views.btn_sales_vender.addActionListener(this);
-
-        //Llamar a la escucha txt
-        this.views.txt_sales_productCode.addKeyListener(this);
-        this.views.txt_sales_price.addKeyListener(this);
-        this.views.txt_sales_identifyCliente.addKeyListener(this);
-        this.views.txt_sales_nameCliente.addKeyListener(this);
-        this.views.txt_sales_cantidad.addKeyListener(this);
-
-        //Llamar a la escucha Label
+        // Escuchadores de botones de tu interfaz gráfica para ventas
+        this.views.btn_sale_add.addActionListener(this);       // Botón "Agregar" (al carrito)
+        this.views.btn_sale_generate.addActionListener(this);  // Botón "Generar Venta" / "Vender"
+        this.views.btn_sale_delete.addActionListener(this);    // Botón "Eliminar" (fila del carrito)
+        this.views.btn_sale_new.addActionListener(this);       // Botón "Nuevo" / "Limpiar"
+        
+        // Escuchador para cargar datos al presionar ENTER en el código del medicamento
+        this.views.txt_sale_productCode.addActionListener(this);
+        this.views.txt_sale_idCustomer.addActionListener(this);
         this.views.jLabelSales.addMouseListener(this);
-        this.views.jLabelReports.addMouseListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == views.btn_sales_vender) {
-            insertSale();
-        } else if (e.getSource() == views.btn_sales_new) {
-            cleanAllFieldsSales();
-            cleanTableTemp();
-        } else if (e.getSource() == views.btn_sales_remove) {
-            model = (DefaultTableModel) views.tb_sales.getModel();
-            model.removeRow(views.tb_sales.getSelectedRow());
-            calculateSales();
-            views.txt_sales_productCode.requestFocus();
-        } else if (e.getSource() == views.btn_sales_add) {
-            int amount = Integer.parseInt(views.txt_sales_cantidad.getText());
-            String product_name = views.txt_sales_nameProduct.getText();
-            double price = Double.parseDouble(views.txt_sales_price.getText());
-            int sale_id = Integer.parseInt(views.txt_sales_product_id.getText());
-            double subtotal = amount * price;
-            int stock = Integer.parseInt(views.txt_sales_stock.getText());
-            String full_name = views.txt_sales_nameCliente.getText();
-            if (stock >= amount) {
-                item = item + 1;
-                temp = (DefaultTableModel) views.tb_sales.getModel();
-                for (int i = 0; i < views.tb_sales.getRowCount(); i++) {
-                    if (views.tb_sales.getValueAt(i, 1).equals(views.txt_sales_nameProduct.getText())) {
-                        JOptionPane.showMessageDialog(null, "El producto ya esta registrado en la tabla ventas");
-                        return;
-                    }
-
-                }
-                ArrayList list = new ArrayList();
-                list.add(item);
-                list.add(sale_id);
-                list.add(product_name);
-                list.add(amount);
-                list.add(price);
-                list.add(subtotal);
-                list.add(full_name);
-                Object[] obj = new Object[6];
-                obj[0] = list.get(1);
-                obj[1] = list.get(2);
-                obj[2] = list.get(3);
-                obj[3] = list.get(4);
-                obj[4] = list.get(5);
-                obj[5] = list.get(6);
-                temp.addRow(obj);
-                calculateSales();
-                cleanFieldsSales();
-                views.txt_sales_productCode.requestFocus();
-            } else {
-                JOptionPane.showMessageDialog(null, "Stock no Disponible");
-            }
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Ingrese una cantidad");
-        }
-    }
-
-    public void listAllSales() {
-        if (rol.equals("Administrador")) {
-            List<Sales> list = saleDao.listAllSalesQuery();
-            model = (DefaultTableModel) views.tb_reports_sales.getModel();
-            Object[] row = new Object[5];
-            for (int i = 0; i < list.size(); i++) {
-                row[0] = list.get(i).getId();
-                row[1] = list.get(i).getCustomer_name();
-                row[2] = list.get(i).getEmployee_name();
-                row[3] = list.get(i).getTotal_to_pay();
-                row[4] = list.get(i).getSale_date();
-                model.addRow(row);
-            }
-            views.tb_reports_sales.setModel(model);
-        }
-    }
-
-    private void insertSale() {
-        int customer_id = Integer.parseInt(views.txt_sales_identifyCliente.getText());
-        int employee_id = EmployeesDao.id_user;
-        double total = Double.parseDouble(views.txt_sales_totalPagar.getText());
-        if (saleDao.registerSaleQuery(customer_id, employee_id, total)) {
-            int sale_id = saleDao.saleID();
-            for (int i = 0; i < views.tb_sales.getRowCount(); i++) {
-                int product_id = Integer.parseInt(views.tb_sales.getValueAt(i, 0).toString());
-                int sale_quantity = Integer.parseInt(views.tb_sales.getValueAt(i, 2).toString());
-                double sale_price = Double.parseDouble(views.tb_sales.getValueAt(i, 3).toString());
-                double sale_subtotal = sale_quantity * sale_price;
-                saleDao.registerSaleDetailsQuery(product_id, sale_id, sale_quantity, sale_price, sale_subtotal);
-                product = productDao.searchId(product_id);
-                int amount = product.getProduct_quantity() - sale_quantity;
-                productDao.updateStockQuery(amount, product_id);
-            }
-            JOptionPane.showMessageDialog(null, "Venta generada");
-            cleanTableTemp();
-            cleanAllFieldsSales();
-        }
-    }
-
-    private void calculateSales() {
-        double total = 0.0;
-        int numRow = views.tb_sales.getRowCount();
-        for (int i = 0; i < numRow; i++) {
-            total = total + Double.parseDouble(String.valueOf(views.tb_sales.getValueAt(i, 4)));
-        }
-        views.txt_sales_totalPagar.setText("" + total);
-    }
-
-    private void cleanTable() {
-        for (int i = 0; i < model.getRowCount(); i++) {
-            model.removeRow(i);
-            i = i + 1;
-        }
-    }
-
-    private void cleanTableTemp() {
-        for (int i = 0; i < temp.getRowCount(); i++) {
-            temp.removeRow(i);
-            i = i - 1;
-        }
-    }
-    
-    private void cleanFieldsSales(){
-        views.txt_sales_productCode.setText("");
-        views.txt_sales_nameProduct.setText("");
-        views.txt_sales_cantidad.setText("");
-        views.txt_sales_product_id.setText("");
-        views.txt_sales_price.setText("");
-        views.txt_sales_subTotal.setText("");
-        views.txt_sales_stock.setText("");
-    }
-    
-    public void cleanAllFieldsSales(){
-         views.txt_sales_productCode.setText("");
-        views.txt_sales_nameProduct.setText("");
-        views.txt_sales_cantidad.setText("");
-        views.txt_sales_product_id.setText("");
-        views.txt_sales_price.setText("");
-        views.txt_sales_subTotal.setText("");
-        views.txt_sales_stock.setText("");
-        views.txt_sales_identifyCliente.setText("");
-        views.txt_sales_nameCliente.setText("");
-        views.txt_sales_totalPagar.setText("");
         
+        
+        if (e.getSource() == views.txt_sale_productCode) {
+            searchProductByCode();
+            
+        }else if(e.getSource()==views.txt_sale_idCustomer){
+            searchCustomerByIdCard();
+        }else if (e.getSource() == views.btn_sale_add) {
+            addProductToCart();
+        } else if (e.getSource() == views.btn_sale_delete) {
+            removeProductFromCart();
+        } else if (e.getSource() == views.btn_sale_generate) {
+            processFinalSale();
+        } else if (e.getSource() == views.btn_sale_new) {
+            cleanFields();
+            cleanTemporaryTable();
+        }
     }
+    
+    
+    private void searchCustomerByIdCard(){
+        if(views.txt_sale_idCustomer.getText().trim().isEmpty())
+            return;
+        try{
+            int id = Integer.parseInt(views.txt_sale_idCustomer.getText().trim());
+            Customers cust = customerDao.searchIdCustomer(id);
+            
+            views.txt_sale_nameCustomer.setText(cust.getFullName());
+            
+            
+        }catch(NumberFormatException ex){
+            JOptionPane.showMessageDialog(null, "El código debe ser estrictamente numérico.", "Error de Formato", JOptionPane.ERROR_MESSAGE);
+                    }
+    }
+
+    // 1. Busca el producto en MySQL e indica cuántas existencias quedan disponibles
+    private void searchProductByCode() {
+        if (views.txt_sale_productCode.getText().trim().isEmpty()) 
+            return;
+        try {
+            int code = Integer.parseInt(views.txt_sale_productCode.getText().trim());
+            Products prod = productDao.searchCode(code);
+            
+            if (prod.getName() != null) {
+                views.txt_sale_nameProduct.setText(prod.getName());
+                views.txt_sale_product_id.setText(String.valueOf(prod.getId()));
+                views.txt_sale_price_product.setText(String.valueOf(prod.getUnitPrice()));
+                views.txt_sale_stock.setText(String.valueOf(prod.getProductQuantity())); // Muestra stock disponible
+                views.txt_sale_quantity.requestFocus(); // Pasa foco a la casilla de cantidad
+            } else {
+                JOptionPane.showMessageDialog(null, "El medicamento no existe en el catálogo.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "El código debe ser estrictamente numérico.", "Error de Formato", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    // 2. Botón "Agregar": Valida inventarios reales en caliente y monta la línea en el JTable
+    private void addProductToCart() {
+        if (areFieldsEmpty()) {
+            JOptionPane.showMessageDialog(null, "Por favor complete todos los datos del medicamento.", "Campos Vacíos", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
+            int id = Integer.parseInt(views.txt_sale_product_id.getText().trim());
+            String name = views.txt_sale_nameProduct.getText().trim();
+            int qty = Integer.parseInt(views.txt_sale_quantity.getText().trim());
+            double price = Double.parseDouble(views.txt_sale_price_product.getText().trim());
+            int currentStock = Integer.parseInt(views.txt_sale_stock.getText().trim());
+            String nameCustomer = views.txt_sale_nameCustomer.getText().trim();
+
+            // ¡Mejora Crítica de Farmacia!: Detener la operación si no hay suficiente medicina
+            if (qty > currentStock) {
+                JOptionPane.showMessageDialog(null, "Stock insuficiente. Solo quedan " + currentStock + " unidades disponibles.", "Inventario Agotado", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Cálculo en caliente del Subtotal
+            double subTotal = qty * price;
+
+            tempModel = (DefaultTableModel) views.tb_sale.getModel();
+            // Insertar fila temporal en la rejilla visual (Id, Nombre, Cantidad, Precio, SubTotal)
+            Object[] row = new Object[6];
+            row[0] = id;
+            row[1] = name;
+            row[2] = qty;
+            row[3] = price;
+            row[4] = subTotal;
+            row[5] = nameCustomer;
+            
+            tempModel.addRow(row);
+
+            calculateTotalToPay();
+            cleanFields();
+            views.txt_sale_productCode.requestFocus();
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Verifique los datos numéricos de cantidad o precio.", "Error de Formato", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    // 3. Botón "Eliminar": Saca la fila seleccionada del carrito y recalcula el monto
+    private void removeProductFromCart() {
+        tempModel = (DefaultTableModel) views.tb_sale.getModel();
+        int row = views.tb_sale.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(null, "Seleccione un medicamento del carrito para sacarlo.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        tempModel.removeRow(row);
+        calculateTotalToPay();
+    }
+
+    // 4. Botón "Generar Venta": Procesa la boleta definitiva y resta el inventario en MySQL por lotes
+    private void processFinalSale() {
+        int rowsCount = views.tb_sale.getRowCount();
+        if (rowsCount == 0) {
+            JOptionPane.showMessageDialog(null, "El carrito de ventas se encuentra vacío.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (views.txt_sale_idCustomer.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe asociar un identificador de cliente para facturar.", "Cliente Requerido", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
+            int customerId = Integer.parseInt(views.txt_sale_idCustomer.getText().trim());
+            int employeeId = Integer.parseInt(views.txt_profile_id.getText().trim()); // ID del cajero logueado
+
+            // Configurar cabecera en el modelo Sales
+            sale.setCustomerId(customerId);
+            sale.setEmployeeId(employeeId);
+            sale.setTotalToPay(totalPay);
+
+            // 1. Insertar cabecera de la factura en MySQL
+            if (saleDao.registerSaleQuery(sale)) {
+                // 2. Obtener el ID autogenerado de esta última factura
+                int saleId = saleDao.getLastSaleId();
+                boolean detailSuccess = true;
+
+                // Recorrer el carrito de compras fila por fila
+                for (int i = 0; i < rowsCount; i++) {
+                    int productId = Integer.parseInt(views.tb_sale.getValueAt(i, 0).toString());
+                    int qty = Integer.parseInt(views.tb_sale.getValueAt(i, 2).toString());
+                    double price = Double.parseDouble(views.tb_sale.getValueAt(i, 3).toString());
+                    double subTotal = Double.parseDouble(views.tb_sale.getValueAt(i, 4).toString());
+
+                    // 3. Registrar el detalle del medicamento comprado
+                    if (saleDao.registerSaleDetailQuery(saleId, productId, qty, price, subTotal)) {
+                        // 4. Traer existencias remanentes y RESTAR el stock en el inventario MySQL
+                        Products currentProd = productDao.searchId(productId);
+                        int netStock = currentProd.getProductQuantity() - qty; // Resta matemática
+                        productDao.updateStockQuery(netStock, productId);
+                    } else {
+                        detailSuccess = false;
+                    }
+                }
+
+                if (detailSuccess) {
+                    JOptionPane.showMessageDialog(null, "¡La venta fue facturada con éxito y el stock fue descontado!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                    cleanFields();
+                    cleanTemporaryTable();
+                }
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Error al extraer los datos de identidad de cliente/cajero.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    // Calcula de forma automatizada la sumatoria total a cobrarle al cliente
+    private void calculateTotalToPay() {
+        totalPay = 0.00;
+        int rowsCount = views.tb_sale.getRowCount();
+        for (int i = 0; i < rowsCount; i++) {
+            totalPay += Double.parseDouble(views.tb_sale.getValueAt(i, 4).toString());
+        }
+        views.txt_sale_total_to_pay.setText(String.valueOf(totalPay));
+    }
+
+    private boolean areFieldsEmpty() {
+        return views.txt_sale_productCode.getText().trim().isEmpty()
+                || views.txt_sale_quantity.getText().trim().isEmpty()
+                || views.txt_sale_price_product.getText().trim().isEmpty()
+                || views.txt_sale_product_id.getText().trim().isEmpty();
+    }
+
+    public void cleanFields() {
+        views.txt_sale_productCode.setText("");
+        views.txt_sale_nameProduct.setText("");
+        views.txt_sale_quantity.setText("");
+        views.txt_sale_price_product.setText("");
+        views.txt_sale_stock.setText("");
+        views.txt_sale_product_id.setText("");
+    }
+
+    public void cleanTemporaryTable() {
+        tempModel = (DefaultTableModel) views.tb_sale.getModel();
+        tempModel.setRowCount(0);
+        views.txt_sale_total_to_pay.setText("0.0");
+    }
+
+    @Override public void keyReleased(KeyEvent e) {}
+    @Override public void keyTyped(KeyEvent e) {}
+    @Override public void keyPressed(KeyEvent e) {}
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (e.getSource() == views.jLabelSales) {
-            views.jTabbedPane1.setSelectedIndex(2);
-        } else if (e.getSource() == views.jLabelReports) {
-            if (rol.equals("Administrador")) {
-                views.jTabbedPane1.setSelectedIndex(7);
-                listAllSales();
-            } else {
-                views.jTabbedPane1.setEnabledAt(7, false);
-                views.jLabelReports.setEnabled(false);
-                JOptionPane.showMessageDialog(null, "No tienes persmisos de administrador");
-            }
+        if(e.getSource()==views.jLabelSales){
+        views.jTabbedPane1.setSelectedIndex(2);    
         }
+        
     }
 
     @Override
@@ -234,66 +279,4 @@ public class SalesController implements ActionListener, MouseListener, KeyListen
     @Override
     public void mouseExited(MouseEvent e) {
     }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        if (e.getSource() == views.txt_sales_productCode) {
-            if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                if (!"".equals(views.txt_sales_productCode.getText())) {
-                    int code = Integer.parseInt(views.txt_sales_productCode.getText());
-                    product = productDao.searchCode(code);
-                    if (product.getName() != null) {
-                        views.txt_sales_nameProduct.setText(product.getName());
-                        views.txt_sales_product_id.setText("" + product.getId());
-                        views.txt_sales_stock.setText("" + product.getProduct_quantity());
-                        views.txt_sales_price.setText("" + product.getUnit_price());
-                        views.txt_sales_cantidad.requestFocus();
-
-                    } else {
-                        JOptionPane.showMessageDialog(null, "No existe ningun producto con ese codigo");
-                        cleanFieldsSales();
-                        views.txt_sales_productCode.requestFocus();
-                    }
-
-                } else {
-                    JOptionPane.showMessageDialog(null, "Ingrese el codigo del producto a vender");
-                }
-            }
-        } else if (e.getSource() == views.txt_sales_identifyCliente) {
-            if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                if (!"".equals(views.txt_sales_identifyCliente.getText())) {
-                    int customer_id = Integer.parseInt(views.txt_sales_identifyCliente.getText());
-                    customer = customerDao.searchCustomer(customer_id);
-                    if (customer.getFull_name() != null) {
-                        views.txt_sales_nameCliente.setText("" + customer.getFull_name());
-                    } else {
-                        views.txt_sales_identifyCliente.setText("");
-                        JOptionPane.showMessageDialog(null, "El cliente no existe");
-                    }
-                }
-            }
-        }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        if (e.getSource() == views.txt_sales_cantidad) {
-            int quantity;
-            double price = Double.parseDouble(views.txt_sales_price.getText());
-            if (views.txt_sales_cantidad.getText().equals("")) {
-                quantity = 1;
-                views.txt_sales_price.setText("" + price);
-            } else {
-                quantity = Integer.parseInt(views.txt_sales_cantidad.getText());
-                price = Double.parseDouble(views.txt_sales_price.getText());
-                views.txt_sales_subTotal.setText("" + (quantity * price));
-            }
-        }
-
-    }
-
 }

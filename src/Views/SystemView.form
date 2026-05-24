@@ -235,7 +235,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-                      <Component id="jLabelColaborator" pref="161" max="32767" attributes="0"/>
+                      <Component id="jLabelColaboradores" pref="161" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -243,14 +243,14 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jLabelColaborator" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabelColaboradores" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="3" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="jLabelColaborator">
+            <Component class="javax.swing.JLabel" name="jLabelColaboradores">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -292,7 +292,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-                      <Component id="jLabelSupplimers" pref="161" max="32767" attributes="0"/>
+                      <Component id="jLabelSuppliers" pref="161" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -300,14 +300,14 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jLabelSupplimers" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabelSuppliers" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="3" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="jLabelSupplimers">
+            <Component class="javax.swing.JLabel" name="jLabelSuppliers">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -543,7 +543,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Images/ventas.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="   Ventas"/>
+                <Property name="text" type="java.lang.String" value="    Ventas"/>
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
@@ -630,13 +630,10 @@
         <Component class="javax.swing.JButton" name="btn_loginOut">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="Tahoma" size="14" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Salir"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_loginOutActionPerformed"/>
-          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
           </AuxValues>
@@ -646,7 +643,7 @@
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="javax.swing.JLabel" name="lb_name_colaborator">
+        <Component class="javax.swing.JLabel" name="lb_name_colaborador">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="14" style="1"/>
@@ -664,7 +661,7 @@
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="javax.swing.JLabel" name="lb_rol_colaborator">
+        <Component class="javax.swing.JLabel" name="lb_rol_colaborador">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="14" style="1"/>
@@ -1089,7 +1086,7 @@
                               <Group type="102" attributes="0">
                                   <Component id="jLabel13" min="-2" pref="155" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                                  <Component id="cb_purchase_proveedor" min="-2" pref="165" max="-2" attributes="0"/>
+                                  <Component id="cb_purchase_supplier" min="-2" pref="165" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -1099,7 +1096,7 @@
                                   </Group>
                                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="txt_purchase_cantidad" min="-2" pref="165" max="-2" attributes="0"/>
+                                      <Component id="txt_purchase_quantity" min="-2" pref="165" max="-2" attributes="0"/>
                                       <Component id="txt_purchase_productName" min="-2" pref="165" max="-2" attributes="0"/>
                                       <Component id="txt_purchase_productCode" min="-2" pref="165" max="-2" attributes="0"/>
                                   </Group>
@@ -1110,29 +1107,29 @@
                               <Group type="102" attributes="0">
                                   <Component id="jLabel17" min="-2" pref="140" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="txt_purchase_totalPagar" min="-2" pref="165" max="-2" attributes="0"/>
+                                  <Component id="txt_purchase_total_to_pay" min="-2" pref="165" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jLabel16" min="-2" pref="140" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="txt_purchase_id" min="-2" pref="165" max="-2" attributes="0"/>
+                                  <Component id="txt_purchase_id_product" min="-2" pref="165" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jLabel15" min="-2" pref="140" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="txt_purchase_subTotal" min="-2" pref="165" max="-2" attributes="0"/>
+                                  <Component id="txt_purchase_subtotal" min="-2" pref="165" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jLabel14" min="-2" pref="140" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                                  <Component id="txt_purchase_precioCompra" min="-2" pref="165" max="-2" attributes="0"/>
+                                  <Component id="txt_purchase_price" min="-2" pref="165" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="btn_purchase_add_product_buy" min="-2" pref="105" max="-2" attributes="0"/>
-                              <Component id="btn_purchase_confirm" min="-2" pref="105" max="-2" attributes="0"/>
-                              <Component id="btn_purchase_remove" min="-2" pref="105" max="-2" attributes="0"/>
+                              <Component id="btn_purchase_add" min="-2" pref="105" max="-2" attributes="0"/>
+                              <Component id="btn_purchase_buy" min="-2" pref="105" max="-2" attributes="0"/>
+                              <Component id="btn_purchase_delete" min="-2" pref="105" max="-2" attributes="0"/>
                               <Component id="btn_purchase_new" min="-2" pref="105" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="135" max="-2" attributes="0"/>
@@ -1147,32 +1144,32 @@
                               <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="txt_purchase_productCode" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                               <Component id="jLabel14" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txt_purchase_precioCompra" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="btn_purchase_add_product_buy" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="txt_purchase_price" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="btn_purchase_add" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="txt_purchase_productName" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                               <Component id="jLabel15" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txt_purchase_subTotal" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="btn_purchase_confirm" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="txt_purchase_subtotal" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="btn_purchase_buy" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txt_purchase_cantidad" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="txt_purchase_quantity" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                               <Component id="jLabel16" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txt_purchase_id" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="btn_purchase_remove" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="txt_purchase_id_product" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="btn_purchase_delete" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="40" pref="40" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="cb_purchase_proveedor" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                  <Component id="cb_purchase_supplier" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                                   <Component id="jLabel17" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txt_purchase_totalPagar" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                  <Component id="txt_purchase_total_to_pay" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                               </Group>
                               <Component id="btn_purchase_new" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
@@ -1224,19 +1221,19 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txt_purchase_cantidad">
+                <Component class="javax.swing.JTextField" name="txt_purchase_quantity">
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="cb_purchase_proveedor">
+                <Component class="javax.swing.JComboBox" name="cb_purchase_supplier">
                   <Properties>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                       <StringArray count="0"/>
                     </Property>
                   </Properties>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;DynamicCb&gt;"/>
+                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Object&gt;"/>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
@@ -1272,12 +1269,12 @@
                     <Property name="text" type="java.lang.String" value="Total a Pagar:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txt_purchase_precioCompra">
+                <Component class="javax.swing.JTextField" name="txt_purchase_price">
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txt_purchase_subTotal">
+                <Component class="javax.swing.JTextField" name="txt_purchase_subtotal">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
                   </Properties>
@@ -1285,7 +1282,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txt_purchase_id">
+                <Component class="javax.swing.JTextField" name="txt_purchase_id_product">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
                     <Property name="enabled" type="boolean" value="false"/>
@@ -1294,7 +1291,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txt_purchase_totalPagar">
+                <Component class="javax.swing.JTextField" name="txt_purchase_total_to_pay">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
                   </Properties>
@@ -1302,7 +1299,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JButton" name="btn_purchase_add_product_buy">
+                <Component class="javax.swing.JButton" name="btn_purchase_add">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="1"/>
@@ -1313,7 +1310,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JButton" name="btn_purchase_confirm">
+                <Component class="javax.swing.JButton" name="btn_purchase_buy">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="1"/>
@@ -1324,7 +1321,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JButton" name="btn_purchase_remove">
+                <Component class="javax.swing.JButton" name="btn_purchase_delete">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="1"/>
@@ -1360,7 +1357,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="tb_purchases">
+                <Component class="javax.swing.JTable" name="tb_purchase">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="6" rowCount="0">
@@ -1461,27 +1458,27 @@
                               <Group type="102" attributes="0">
                                   <Component id="jLabel56" min="-2" pref="155" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                                  <Component id="txt_sales_totalPagar" min="-2" pref="160" max="-2" attributes="0"/>
+                                  <Component id="txt_sale_total_to_pay" min="-2" pref="160" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jLabel55" min="-2" pref="155" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                                  <Component id="txt_sales_identifyCliente" min="-2" pref="160" max="-2" attributes="0"/>
+                                  <Component id="txt_sale_idCustomer" min="-2" pref="160" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jLabel54" min="-2" pref="155" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                                  <Component id="txt_sales_cantidad" min="-2" pref="160" max="-2" attributes="0"/>
+                                  <Component id="txt_sale_quantity" min="-2" pref="160" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jLabel53" min="-2" pref="155" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                                  <Component id="txt_sales_nameProduct" min="-2" pref="160" max="-2" attributes="0"/>
+                                  <Component id="txt_sale_nameProduct" min="-2" pref="160" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jLabel52" min="-2" pref="155" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                                  <Component id="txt_sales_productCode" min="-2" pref="160" max="-2" attributes="0"/>
+                                  <Component id="txt_sale_productCode" min="-2" pref="160" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
@@ -1494,18 +1491,18 @@
                           </Group>
                           <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="txt_sales_nameCliente" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
-                              <Component id="txt_sales_stock" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
-                              <Component id="txt_sales_subTotal" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
-                              <Component id="txt_sales_price" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
-                              <Component id="txt_sales_product_id" alignment="1" min="-2" pref="160" max="-2" attributes="0"/>
+                              <Component id="txt_sale_nameCustomer" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
+                              <Component id="txt_sale_stock" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
+                              <Component id="txt_sale_subtotal" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
+                              <Component id="txt_sale_price_product" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
+                              <Component id="txt_sale_product_id" alignment="1" min="-2" pref="160" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="btn_sales_add" min="-2" pref="105" max="-2" attributes="0"/>
-                              <Component id="btn_sales_vender" min="-2" pref="105" max="-2" attributes="0"/>
-                              <Component id="btn_sales_remove" min="-2" pref="105" max="-2" attributes="0"/>
-                              <Component id="btn_sales_new" min="-2" pref="105" max="-2" attributes="0"/>
+                              <Component id="btn_sale_add" min="-2" pref="105" max="-2" attributes="0"/>
+                              <Component id="btn_sale_generate" min="-2" pref="105" max="-2" attributes="0"/>
+                              <Component id="btn_sale_delete" min="-2" pref="105" max="-2" attributes="0"/>
+                              <Component id="btn_sale_new" min="-2" pref="105" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
@@ -1517,45 +1514,45 @@
                           <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="txt_sales_product_id" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                                  <Component id="btn_sales_add" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                  <Component id="txt_sale_product_id" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                  <Component id="btn_sale_add" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel52" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                                       <Component id="jLabel57" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                                      <Component id="txt_sales_productCode" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                      <Component id="txt_sale_productCode" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel53" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                                       <Component id="jLabel58" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                                      <Component id="txt_sales_nameProduct" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                                      <Component id="txt_sales_price" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                                      <Component id="btn_sales_vender" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                      <Component id="txt_sale_nameProduct" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                      <Component id="txt_sale_price_product" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                      <Component id="btn_sale_generate" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel54" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                                       <Component id="jLabel59" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                                      <Component id="txt_sales_cantidad" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                                      <Component id="txt_sales_subTotal" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                                      <Component id="btn_sales_remove" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                      <Component id="txt_sale_quantity" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                      <Component id="txt_sale_subtotal" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                      <Component id="btn_sale_delete" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel55" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                                       <Component id="jLabel60" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                                      <Component id="txt_sales_identifyCliente" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                                      <Component id="txt_sales_stock" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                                      <Component id="btn_sales_new" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                      <Component id="txt_sale_idCustomer" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                      <Component id="txt_sale_stock" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                      <Component id="btn_sale_new" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel56" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                                       <Component id="jLabel61" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                                      <Component id="txt_sales_totalPagar" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                                      <Component id="txt_sales_nameCliente" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                      <Component id="txt_sale_total_to_pay" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                      <Component id="txt_sale_nameCustomer" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -1645,7 +1642,7 @@
                     <Property name="text" type="java.lang.String" value="Nombre del cliente:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txt_sales_productCode">
+                <Component class="javax.swing.JTextField" name="txt_sale_productCode">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="0"/>
@@ -1655,38 +1652,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txt_sales_nameProduct">
-                  <Properties>
-                    <Property name="editable" type="boolean" value="false"/>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Tahoma" size="14" style="0"/>
-                    </Property>
-                  </Properties>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-                  </AuxValues>
-                </Component>
-                <Component class="javax.swing.JTextField" name="txt_sales_cantidad">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Tahoma" size="14" style="0"/>
-                    </Property>
-                  </Properties>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-                  </AuxValues>
-                </Component>
-                <Component class="javax.swing.JTextField" name="txt_sales_identifyCliente">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Tahoma" size="14" style="0"/>
-                    </Property>
-                  </Properties>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-                  </AuxValues>
-                </Component>
-                <Component class="javax.swing.JTextField" name="txt_sales_totalPagar">
+                <Component class="javax.swing.JTextField" name="txt_sale_nameProduct">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -1697,7 +1663,27 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txt_sales_product_id">
+                <Component class="javax.swing.JTextField" name="txt_sale_quantity">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JTextField" name="txt_sale_idCustomer">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JTextField" name="txt_sale_total_to_pay">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -1708,7 +1694,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txt_sales_price">
+                <Component class="javax.swing.JTextField" name="txt_sale_product_id">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -1719,7 +1705,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txt_sales_subTotal">
+                <Component class="javax.swing.JTextField" name="txt_sale_price_product">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -1730,7 +1716,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txt_sales_stock">
+                <Component class="javax.swing.JTextField" name="txt_sale_subtotal">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -1741,7 +1727,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txt_sales_nameCliente">
+                <Component class="javax.swing.JTextField" name="txt_sale_stock">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -1752,7 +1738,18 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JButton" name="btn_sales_add">
+                <Component class="javax.swing.JTextField" name="txt_sale_nameCustomer">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JButton" name="btn_sale_add">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="1"/>
@@ -1763,7 +1760,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JButton" name="btn_sales_vender">
+                <Component class="javax.swing.JButton" name="btn_sale_generate">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="1"/>
@@ -1774,7 +1771,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JButton" name="btn_sales_remove">
+                <Component class="javax.swing.JButton" name="btn_sale_delete">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="1"/>
@@ -1785,7 +1782,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JButton" name="btn_sales_new">
+                <Component class="javax.swing.JButton" name="btn_sale_new">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="1"/>
@@ -1810,7 +1807,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="tb_sales">
+                <Component class="javax.swing.JTable" name="tb_sale">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="6" rowCount="0">
@@ -1914,32 +1911,28 @@
                           </Group>
                           <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="txt_customer_name" min="-2" pref="165" max="-2" attributes="0"/>
+                              <Component id="txt_customer_id" min="-2" pref="165" max="-2" attributes="0"/>
+                              <Component id="txt_customer_address" alignment="0" min="-2" pref="165" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="txt_customer_name" min="-2" pref="165" max="-2" attributes="0"/>
-                                      <Component id="txt_customer_id" min="-2" pref="165" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="jLabel21" min="-2" pref="75" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                                          <Component id="txt_customer_telefono" min="-2" pref="165" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="jLabel22" min="-2" pref="75" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                                          <Component id="txt_customer_correo" min="-2" pref="165" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
+                                  <Component id="jLabel21" min="-2" pref="75" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+                                  <Component id="txt_customer_telephone" min="-2" pref="165" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="txt_customer_direccion" alignment="0" min="-2" pref="165" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel22" min="-2" pref="75" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+                                  <Component id="txt_customer_email" min="-2" pref="165" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                           <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="btn_customer_cancelar" min="-2" pref="105" max="-2" attributes="0"/>
-                              <Component id="btn_customer_remove" min="-2" pref="105" max="-2" attributes="0"/>
-                              <Component id="btn_customer_modificar" min="-2" pref="105" max="-2" attributes="0"/>
+                              <Component id="btn_customer_cancel" min="-2" pref="105" max="-2" attributes="0"/>
+                              <Component id="btn_customer_delete" min="-2" pref="105" max="-2" attributes="0"/>
+                              <Component id="btn_customer_update" min="-2" pref="105" max="-2" attributes="0"/>
                               <Component id="btn_customer_register" min="-2" pref="105" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="80" max="32767" attributes="0"/>
@@ -1951,29 +1944,29 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jLabel18" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel21" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel18" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="jLabel21" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                               <Component id="txt_customer_id" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="txt_customer_telefono" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="txt_customer_telephone" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                               <Component id="btn_customer_register" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jLabel19" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel22" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel19" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="jLabel22" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                               <Component id="txt_customer_name" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="txt_customer_correo" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="btn_customer_modificar" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="txt_customer_email" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="btn_customer_update" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jLabel20" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txt_customer_direccion" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="btn_customer_remove" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="jLabel20" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="txt_customer_address" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="btn_customer_delete" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="btn_customer_cancelar" min="-2" pref="30" max="-2" attributes="0"/>
-                          <EmptySpace pref="27" max="32767" attributes="0"/>
+                          <Component id="btn_customer_cancel" min="-2" pref="30" max="-2" attributes="0"/>
+                          <EmptySpace pref="24" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -2039,7 +2032,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txt_customer_direccion">
+                <Component class="javax.swing.JTextField" name="txt_customer_address">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="12" style="1"/>
@@ -2049,7 +2042,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txt_customer_telefono">
+                <Component class="javax.swing.JTextField" name="txt_customer_telephone">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="12" style="1"/>
@@ -2059,7 +2052,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txt_customer_correo">
+                <Component class="javax.swing.JTextField" name="txt_customer_email">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="12" style="1"/>
@@ -2080,7 +2073,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JButton" name="btn_customer_modificar">
+                <Component class="javax.swing.JButton" name="btn_customer_update">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="1"/>
@@ -2091,7 +2084,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JButton" name="btn_customer_remove">
+                <Component class="javax.swing.JButton" name="btn_customer_delete">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="1"/>
@@ -2102,7 +2095,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JButton" name="btn_customer_cancelar">
+                <Component class="javax.swing.JButton" name="btn_customer_cancel">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="1"/>
@@ -2162,7 +2155,7 @@
                         <Column editable="false" title="Identificacion" type="java.lang.Object"/>
                         <Column editable="false" title="Nombre" type="java.lang.Object"/>
                         <Column editable="false" title="Direccion" type="java.lang.Object"/>
-                        <Column editable="true" title="Telefeno" type="java.lang.Object"/>
+                        <Column editable="false" title="Telefeno" type="java.lang.Object"/>
                         <Column editable="false" title="Correo" type="java.lang.Object"/>
                       </Table>
                     </Property>
@@ -2255,19 +2248,19 @@
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <Component id="txt_colaborator_name" min="-2" pref="165" max="-2" attributes="0"/>
+                                  <Component id="txt_colaborador_name" min="-2" pref="165" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
                                   <Component id="jLabel29" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
-                                  <Component id="txt_colaborator_id" min="-2" pref="165" max="-2" attributes="0"/>
+                                  <Component id="txt_colaborador_id_card" min="-2" pref="165" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
                                   <Component id="jLabel28" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="txt_colaborator_nameUser" alignment="0" min="-2" pref="165" max="-2" attributes="0"/>
-                                      <Component id="cb_colaborator_rol" alignment="0" min="-2" pref="165" max="-2" attributes="0"/>
+                                      <Component id="txt_colaborador_username" alignment="0" min="-2" pref="165" max="-2" attributes="0"/>
+                                      <Component id="cb_colaborador_rol" alignment="0" min="-2" pref="165" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -2281,20 +2274,20 @@
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="txt_colaborator_mail" alignment="0" min="-2" pref="165" max="-2" attributes="0"/>
+                              <Component id="txt_colaborador_email" alignment="0" min="-2" pref="165" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="txt_colaborator_address" min="-2" pref="165" max="-2" attributes="0"/>
-                                      <Component id="txt_colaborator_phone" min="-2" pref="165" max="-2" attributes="0"/>
-                                      <Component id="txt_colaborator_pass" alignment="0" min="-2" pref="165" max="-2" attributes="0"/>
+                                      <Component id="txt_colaborador_address" min="-2" pref="165" max="-2" attributes="0"/>
+                                      <Component id="txt_colaborador_telephone" min="-2" pref="165" max="-2" attributes="0"/>
+                                      <Component id="txt_colaborador_password" alignment="0" min="-2" pref="165" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="btn_colaborator_cancel" min="-2" pref="105" max="-2" attributes="0"/>
-                                      <Component id="btn_colaborator_register" min="-2" pref="105" max="-2" attributes="0"/>
+                                      <Component id="btn_colaborador_cancel" min="-2" pref="105" max="-2" attributes="0"/>
+                                      <Component id="btn_colaborador_register" min="-2" pref="105" max="-2" attributes="0"/>
                                       <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                                          <Component id="btn_colaborator_modificar" min="-2" pref="105" max="-2" attributes="0"/>
-                                          <Component id="btn_colaborator_remove" alignment="0" min="-2" pref="105" max="-2" attributes="0"/>
+                                          <Component id="btn_colaborador_update" min="-2" pref="105" max="-2" attributes="0"/>
+                                          <Component id="btn_colaborador_delete" alignment="0" min="-2" pref="105" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -2310,33 +2303,33 @@
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel24" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel28" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txt_colaborator_id" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="txt_colaborator_address" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="btn_colaborator_register" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="txt_colaborador_id_card" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="txt_colaborador_address" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="btn_colaborador_register" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel25" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                               <Component id="jLabel29" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txt_colaborator_name" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="txt_colaborator_phone" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="btn_colaborator_modificar" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="txt_colaborador_name" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="txt_colaborador_telephone" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="btn_colaborador_update" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel26" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel30" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txt_colaborator_nameUser" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="txt_colaborator_mail" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="btn_colaborator_remove" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="txt_colaborador_username" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="txt_colaborador_email" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="btn_colaborador_delete" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel27" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel31" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="cb_colaborator_rol" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="txt_colaborator_pass" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="btn_colaborator_cancel" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="cb_colaborador_rol" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="txt_colaborador_password" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="btn_colaborador_cancel" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
@@ -2408,7 +2401,7 @@
                     <Property name="text" type="java.lang.String" value="Contrase&#xf1;a:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txt_colaborator_id">
+                <Component class="javax.swing.JTextField" name="txt_colaborador_id_card">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="12" style="1"/>
@@ -2418,7 +2411,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txt_colaborator_name">
+                <Component class="javax.swing.JTextField" name="txt_colaborador_name">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="12" style="1"/>
@@ -2428,7 +2421,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txt_colaborator_nameUser">
+                <Component class="javax.swing.JTextField" name="txt_colaborador_username">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="12" style="1"/>
@@ -2438,7 +2431,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="cb_colaborator_rol">
+                <Component class="javax.swing.JComboBox" name="cb_colaborador_rol">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="12" style="1"/>
@@ -2455,7 +2448,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txt_colaborator_address">
+                <Component class="javax.swing.JTextField" name="txt_colaborador_address">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="12" style="1"/>
@@ -2465,7 +2458,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txt_colaborator_phone">
+                <Component class="javax.swing.JTextField" name="txt_colaborador_telephone">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="12" style="1"/>
@@ -2475,7 +2468,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txt_colaborator_mail">
+                <Component class="javax.swing.JTextField" name="txt_colaborador_email">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="12" style="1"/>
@@ -2485,20 +2478,17 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JPasswordField" name="txt_colaborator_pass">
+                <Component class="javax.swing.JPasswordField" name="txt_colaborador_password">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="12" style="1"/>
                     </Property>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_colaborator_passActionPerformed"/>
-                  </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JButton" name="btn_colaborator_register">
+                <Component class="javax.swing.JButton" name="btn_colaborador_register">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="1"/>
@@ -2509,7 +2499,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JButton" name="btn_colaborator_modificar">
+                <Component class="javax.swing.JButton" name="btn_colaborador_update">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="1"/>
@@ -2520,7 +2510,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JButton" name="btn_colaborator_remove">
+                <Component class="javax.swing.JButton" name="btn_colaborador_delete">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="1"/>
@@ -2531,7 +2521,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JButton" name="btn_colaborator_cancel">
+                <Component class="javax.swing.JButton" name="btn_colaborador_cancel">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="1"/>
@@ -2557,15 +2547,12 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JTextField" name="txt_colaborator_search">
+            <Component class="javax.swing.JTextField" name="txt_colaborador_search">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="12" style="1"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_colaborator_searchActionPerformed"/>
-              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
               </AuxValues>
@@ -2587,10 +2574,11 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="tb_colaborator">
+                <Component class="javax.swing.JTable" name="tb_colaborador">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="7" rowCount="0">
+                      <Table columnCount="8" rowCount="0">
+                        <Column editable="false" title="Id" type="java.lang.Object"/>
                         <Column editable="false" title="Identificaci&#xf3;n" type="java.lang.Object"/>
                         <Column editable="false" title="Nombre" type="java.lang.Object"/>
                         <Column editable="false" title="Usuario" type="java.lang.Object"/>
@@ -2602,6 +2590,11 @@
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                       <TableColumnModel selectionModel="0">
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
                         <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                           <Title/>
                           <Editor/>
@@ -2649,6 +2642,33 @@
                 </Component>
               </SubComponents>
             </Container>
+            <Component class="javax.swing.JLabel" name="jLabel64">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="14" style="1"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Id : "/>
+              </Properties>
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                  <AbsoluteConstraints x="770" y="310" width="30" height="30"/>
+                </Constraint>
+              </Constraints>
+            </Component>
+            <Component class="javax.swing.JTextField" name="txt_colaborador_id">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+              </AuxValues>
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                  <AbsoluteConstraints x="800" y="310" width="50" height="30"/>
+                </Constraint>
+              </Constraints>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="jPanel5">
@@ -2694,22 +2714,22 @@
                               <Group type="102" attributes="0">
                                   <Component id="jLabel36" min="-2" pref="85" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                                  <Component id="txt_suplimers_mail" min="-2" pref="165" max="-2" attributes="0"/>
+                                  <Component id="txt_supplier_email" min="-2" pref="165" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jLabel35" max="32767" attributes="0"/>
                                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                                  <Component id="txt_suplimers_telefono" min="-2" pref="165" max="-2" attributes="0"/>
+                                  <Component id="txt_supplier_telephone" min="-2" pref="165" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jLabel34" max="32767" attributes="0"/>
                                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                                  <Component id="txt_suplimers_address" min="-2" pref="165" max="-2" attributes="0"/>
+                                  <Component id="txt_supplier_address" min="-2" pref="165" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jLabel33" max="32767" attributes="0"/>
                                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                                  <Component id="txt_suplimers_name" min="-2" pref="165" max="-2" attributes="0"/>
+                                  <Component id="txt_supplier_name" min="-2" pref="165" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
@@ -2717,7 +2737,7 @@
                               <Group type="102" attributes="0">
                                   <Component id="jLabel37" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                                  <Component id="txt_suplimers_descripcion" min="-2" pref="165" max="-2" attributes="0"/>
+                                  <Component id="txt_supplier_description" min="-2" pref="165" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
@@ -2726,17 +2746,17 @@
                                   </Group>
                                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="txt_suplimers_id" min="-2" pref="165" max="-2" attributes="0"/>
-                                      <Component id="cb_suplimers_ciudad" min="-2" pref="165" max="-2" attributes="0"/>
+                                      <Component id="txt_supplier_id" min="-2" pref="165" max="-2" attributes="0"/>
+                                      <Component id="cb_supplier_city" min="-2" pref="165" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
                           <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="btn_suplimers_cancel" min="-2" pref="105" max="-2" attributes="0"/>
-                              <Component id="btn_suplimers_register" min="-2" pref="105" max="-2" attributes="0"/>
-                              <Component id="btn_suplimers_modificar" min="-2" pref="105" max="-2" attributes="0"/>
-                              <Component id="btn_suplimers_remove" min="-2" pref="105" max="-2" attributes="0"/>
+                              <Component id="btn_supplier_cancel" min="-2" pref="105" max="-2" attributes="0"/>
+                              <Component id="btn_supplier_register" min="-2" pref="105" max="-2" attributes="0"/>
+                              <Component id="btn_supplier_update" min="-2" pref="105" max="-2" attributes="0"/>
+                              <Component id="btn_supplier_delete" min="-2" pref="105" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="117" max="32767" attributes="0"/>
                       </Group>
@@ -2749,31 +2769,31 @@
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel33" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel37" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txt_suplimers_name" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="txt_suplimers_descripcion" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="btn_suplimers_register" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="txt_supplier_name" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="txt_supplier_description" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="btn_supplier_register" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel34" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel38" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txt_suplimers_address" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="cb_suplimers_ciudad" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="btn_suplimers_modificar" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="txt_supplier_address" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="cb_supplier_city" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="btn_supplier_update" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel35" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel39" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txt_suplimers_telefono" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="txt_suplimers_id" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="btn_suplimers_remove" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="txt_supplier_telephone" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="txt_supplier_id" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="btn_supplier_delete" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel36" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txt_suplimers_mail" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="btn_suplimers_cancel" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="txt_supplier_email" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="btn_supplier_cancel" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                       </Group>
@@ -2837,7 +2857,7 @@
                     <Property name="text" type="java.lang.String" value="Id:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txt_suplimers_name">
+                <Component class="javax.swing.JTextField" name="txt_supplier_name">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="0"/>
@@ -2847,7 +2867,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txt_suplimers_address">
+                <Component class="javax.swing.JTextField" name="txt_supplier_address">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="0"/>
@@ -2857,7 +2877,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txt_suplimers_telefono">
+                <Component class="javax.swing.JTextField" name="txt_supplier_telephone">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="0"/>
@@ -2867,7 +2887,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txt_suplimers_mail">
+                <Component class="javax.swing.JTextField" name="txt_supplier_email">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="0"/>
@@ -2877,7 +2897,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txt_suplimers_descripcion">
+                <Component class="javax.swing.JTextField" name="txt_supplier_description">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="0"/>
@@ -2887,7 +2907,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="cb_suplimers_ciudad">
+                <Component class="javax.swing.JComboBox" name="cb_supplier_city">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="0"/>
@@ -2906,7 +2926,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txt_suplimers_id">
+                <Component class="javax.swing.JTextField" name="txt_supplier_id">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -2918,7 +2938,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JButton" name="btn_suplimers_register">
+                <Component class="javax.swing.JButton" name="btn_supplier_register">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="1"/>
@@ -2929,7 +2949,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JButton" name="btn_suplimers_modificar">
+                <Component class="javax.swing.JButton" name="btn_supplier_update">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="1"/>
@@ -2940,7 +2960,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JButton" name="btn_suplimers_remove">
+                <Component class="javax.swing.JButton" name="btn_supplier_delete">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="1"/>
@@ -2951,7 +2971,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JButton" name="btn_suplimers_cancel">
+                <Component class="javax.swing.JButton" name="btn_supplier_cancel">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="1"/>
@@ -2977,7 +2997,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JTextField" name="txt_suplimers_search">
+            <Component class="javax.swing.JTextField" name="txt_supplier_search">
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
               </AuxValues>
@@ -2999,7 +3019,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="tb_suplimers">
+                <Component class="javax.swing.JTable" name="tb_supplier">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="7" rowCount="0">
@@ -3116,12 +3136,12 @@
                                   <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="1" attributes="0">
                                       <Component id="btn_category_register" min="-2" pref="105" max="-2" attributes="0"/>
-                                      <Component id="btn_category_modificar" min="-2" pref="105" max="-2" attributes="0"/>
+                                      <Component id="btn_category_update" min="-2" pref="105" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="103" alignment="1" groupAlignment="0" attributes="0">
                                   <Component id="btn_category_cancel" min="-2" pref="105" max="-2" attributes="0"/>
-                                  <Component id="btn_category_eliminar" min="-2" pref="105" max="-2" attributes="0"/>
+                                  <Component id="btn_category_delete" min="-2" pref="105" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace pref="67" max="32767" attributes="0"/>
@@ -3141,10 +3161,10 @@
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel42" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="txt_category_name" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="btn_category_modificar" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="btn_category_update" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="btn_category_eliminar" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="btn_category_delete" min="-2" pref="30" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="btn_category_cancel" min="-2" pref="30" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
@@ -3202,7 +3222,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JButton" name="btn_category_modificar">
+                <Component class="javax.swing.JButton" name="btn_category_update">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="1"/>
@@ -3213,7 +3233,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JButton" name="btn_category_eliminar">
+                <Component class="javax.swing.JButton" name="btn_category_delete">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="1"/>
@@ -3256,9 +3276,6 @@
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_category_searchActionPerformed"/>
-              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
               </AuxValues>
@@ -3360,7 +3377,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="tb_reports_purchase">
+                <Component class="javax.swing.JTable" name="tb_reports_purchases">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="4" rowCount="0">
@@ -3530,12 +3547,12 @@
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jLabel49" max="32767" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txt_profile_mail" min="-2" pref="165" max="-2" attributes="0"/>
+                                  <Component id="txt_profile_email" min="-2" pref="165" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jLabel48" max="32767" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txt_profile_telefono" min="-2" pref="165" max="-2" attributes="0"/>
+                                  <Component id="txt_profile_telephone" min="-2" pref="165" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
@@ -3547,25 +3564,34 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="txt_profile_name" alignment="1" min="-2" pref="165" max="-2" attributes="0"/>
                                       <Component id="txt_profile_address" alignment="1" min="-2" pref="165" max="-2" attributes="0"/>
-                                      <Component id="txt_profile_id" alignment="1" min="-2" pref="165" max="-2" attributes="0"/>
+                                      <Component id="txt_profile_id_card" alignment="1" min="-2" pref="165" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
                           <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel50" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel51" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="txt_profile_confirmPass" min="-2" pref="165" max="-2" attributes="0"/>
                               <Group type="102" attributes="0">
-                                  <Component id="txt_profile_newPass" min="-2" pref="165" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
-                                  <Component id="btn_profile_modificar" min="-2" pref="105" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jLabel50" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel51" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="txt_profile_confirm_password" min="-2" pref="165" max="-2" attributes="0"/>
+                                      <Group type="102" attributes="0">
+                                          <Component id="txt_profile_new_password" min="-2" pref="165" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
+                                          <Component id="btn_profile_update" min="-2" pref="105" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Component id="jLabel65" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="txt_profile_id" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="34" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -3576,31 +3602,33 @@
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel45" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel50" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txt_profile_id" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="txt_profile_newPass" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="btn_profile_modificar" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="txt_profile_id_card" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="txt_profile_new_password" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="btn_profile_update" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel46" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel51" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="txt_profile_name" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="txt_profile_confirmPass" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="txt_profile_confirm_password" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="txt_profile_address" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                               <Component id="jLabel47" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel65" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="txt_profile_id" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel48" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txt_profile_telefono" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="txt_profile_telephone" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel49" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txt_profile_mail" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="txt_profile_email" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
@@ -3664,7 +3692,7 @@
                     <Property name="text" type="java.lang.String" value="Confirmar Contrase&#xf1;a"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txt_profile_id">
+                <Component class="javax.swing.JTextField" name="txt_profile_id_card">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
                   </Properties>
@@ -3688,7 +3716,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txt_profile_telefono">
+                <Component class="javax.swing.JTextField" name="txt_profile_telephone">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
                   </Properties>
@@ -3696,7 +3724,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txt_profile_mail">
+                <Component class="javax.swing.JTextField" name="txt_profile_email">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
                   </Properties>
@@ -3704,7 +3732,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JPasswordField" name="txt_profile_newPass">
+                <Component class="javax.swing.JPasswordField" name="txt_profile_new_password">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="1"/>
@@ -3714,7 +3742,7 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JPasswordField" name="txt_profile_confirmPass">
+                <Component class="javax.swing.JPasswordField" name="txt_profile_confirm_password">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="1"/>
@@ -3724,12 +3752,29 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JButton" name="btn_profile_modificar">
+                <Component class="javax.swing.JButton" name="btn_profile_update">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="1"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Modificar"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel65">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="1"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Id "/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="txt_profile_id">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
