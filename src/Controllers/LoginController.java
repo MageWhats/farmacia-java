@@ -7,10 +7,7 @@ import Views.SystemView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
-import Models.Purchases;
-import Models.PurchasesDao; // Si tus DAOs están en otra carpeta, cambia 'model' por 'dao'
-import Models.ProductDao;   // Si tus DAOs están en otra carpeta, cambia 'model' por 'dao'
-import Controllers.PurchasesController;
+
 
 public class LoginController implements ActionListener {
 

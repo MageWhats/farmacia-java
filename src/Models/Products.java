@@ -6,18 +6,18 @@ public class Products {
     private int code_product;
     private String name; 
     private String description;
-    private double unitPrice; // Cambiado a double primitivo y camelCase
-    private int productQuantity; // Cambiado a camelCase
+    private double unitPrice; 
+    private int productQuantity; 
     private String created;
     private String update;
-    private int categoryId; // Cambiado a camelCase
-    private String categoryName; // Cambiado a camelCase
+    private int categoryId; 
+    private String categoryName;
 
-    // Constructor vacío (Esencial para frameworks y mantenimiento)
+ 
     public Products() {
     }
 
-    // Constructor completo optimizado
+  
     public Products(int id, int code_product, String name, String description, double unitPrice, int productQuantity, String created, String update, int categoryId, String categoryName) {
         this.id = id;
         this.code_product = code_product;

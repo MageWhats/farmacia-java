@@ -3,12 +3,12 @@ package Models;
 
 public class Purchases{
     // Atributos definidos por la base de datos de tu esquema
-    private int id;             // `id` (INT, Autoincremental)
-    private double total;       // `total` (DOUBLE)
-    private String created;     // `created` (DATETIME maneja string en este diseño)
+    private int id;           
+    private double total;       
+    private String created;    
     private int supplierId;   
     private int employeeId;
-    private String employeeName;    // `employee_id` (INT) - Convención Java
+    private String employeeName;   
     private String supplierName;
 
 

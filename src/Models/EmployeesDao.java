@@ -42,26 +42,7 @@ public class EmployeesDao {
         return employee;
     }
     
-   /* public Employees searchIdCard(int id_card){
-        String query = "Select id, full_name FROM employees WHERE id_card = ? ";
-        Employees employees = new Employees();
-        
-        try (Connection conn = cn.getConnection();
-                PreparedStatement pst = conn.prepareStatement(query)){
-            
-            pst.setInt(1, id_card);
-            try(ResultSet rs = pst.executeQuery()){
-                 if(rs.next()){
-                     employees.setId(rs.getInt("id"));
-                     employees.setFullName("full_name");
-                 }
-            }
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Error al buscar código: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        return employees;
-        }
-*/
+
     public boolean registerEmployeeQuery(Employees employee) {
         String query = "INSERT INTO employees (id_card, full_name, user_name, address, telephone, email, password, rol, created, updated) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         Timestamp dateTime = new Timestamp(new Date().getTime());
@@ -148,7 +129,6 @@ public class EmployeesDao {
     private Employees mapResultSetToEmployee(ResultSet rs) throws SQLException {
         Employees employee = new Employees();
         employee.setId(rs.getInt("id"));
-        employee.setIdCard(rs.getInt("id_card")); // ¡Mapeado correctamente de la base de datos!
         employee.setFullName(rs.getString("full_name"));
         employee.setUsername(rs.getString("user_name"));
         employee.setAddress(rs.getString("address"));

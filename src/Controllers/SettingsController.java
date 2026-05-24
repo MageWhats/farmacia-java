@@ -21,7 +21,7 @@ public class SettingsController implements ActionListener, MouseListener {
         this.employeeDao = employeeDao;
         this.views = views;
 
-        // Escuchador para el botón "Modificar" de tu diseño
+       
         this.views.btn_profile_update.addActionListener(this);
 
         // Escuchador para la opción del menú lateral que abre la pestaña de Configuración/Perfil

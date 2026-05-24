@@ -10,8 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
-import Models.PurchaseDetail; // Asegúrate de importar tu modelo de detalles
-import Models.Purchases;
+
 
 public class PurchasesDao {
 
@@ -31,14 +30,14 @@ public class PurchasesDao {
 
         try {
             conn = cn.getConnection();
-            conn.setAutoCommit(false); // Activamos transacción para que no guarde a medias si hay errores
+            conn.setAutoCommit(false); 
 
             // Guardar la cabecera de la compra
             pstPurchase = conn.prepareStatement(queryPurchase, Statement.RETURN_GENERATED_KEYS);
             pstPurchase.setDouble(1, purchase.getTotal());
             pstPurchase.setTimestamp(2, dateTime);
             pstPurchase.setInt(3, purchase.getSupplierId());
-            pstPurchase.setInt(4, purchase.getEmployeeId()); // CORREGIDO: Ahora va el EmployeeID, no el ProductID
+            pstPurchase.setInt(4, purchase.getEmployeeId());
             pstPurchase.executeUpdate();
 
             // Obtener el ID autoincremental que MySQL le asignó a esta compra
@@ -52,22 +51,21 @@ public class PurchasesDao {
             // Guardar uno a uno los productos del carrito en la tabla de detalles
             pstDetail = conn.prepareStatement(queryDetail);
             for (PurchaseDetail detail : detailsList) {
-                pstDetail.setInt(1, purchaseIdGenerated); // Llave foránea conectada a purchases(id)
+                pstDetail.setInt(1, purchaseIdGenerated);
                 pstDetail.setInt(2, detail.getProductCode());
                 pstDetail.setInt(3, detail.getQuantity());
                 pstDetail.setDouble(4, detail.getPrice());
                 pstDetail.setDouble(5, detail.getSubtotal());
-                pstDetail.addBatch(); // Empaqueta las filas para ejecución masiva eficiente
+                pstDetail.addBatch();
             }
-
-            pstDetail.executeBatch(); // Ejecuta todas las inserciones de detalles juntas
-            conn.commit();            // Aplica los cambios finales en la base de datos de manera segura
+            pstDetail.executeBatch(); 
+            conn.commit();            
             return true;
 
         } catch (SQLException e) {
             if (conn != null) {
                 try {
-                    conn.rollback(); // Cancela todo si algo falló para no corromper datos
+                    conn.rollback(); 
                 } catch (SQLException ex) {
                     System.out.println("Error en rollback: " + ex.getMessage());
                 }
@@ -75,7 +73,7 @@ public class PurchasesDao {
             JOptionPane.showMessageDialog(null, "Error al registrar la compra completa: " + e.getMessage(), "Error SQL", JOptionPane.ERROR_MESSAGE);
             return false;
         } finally {
-            // Cierre seguro de recursos abiertos
+         
             try {
                 if (rs != null) rs.close();
                 if (pstPurchase != null) pstPurchase.close();
@@ -87,8 +85,7 @@ public class PurchasesDao {
         }
     }
 
-    // 2. LISTAR HISTORIAL DE COMPRAS (Para la tabla visual de "Compras Realizadas")
-    // CORREGIDO: Eliminados los campos inexistentes de 'purchases' para evitar el error 'Column not found'
+   
     public List<Purchases> listAllPurchasesQuery() {
         List<Purchases> listPurchases = new ArrayList<>();
         // Trae los campos de la tabla 'purchases' junto con el nombre del proveedor real mediante el JOIN
@@ -117,17 +114,16 @@ public class PurchasesDao {
         return listPurchases;
     }
 
-    // 3. LISTAR DETALLES ESPECÍFICOS DE UNA COMPRA SELECCIONADA
-    // CORREGIDO: La consulta ahora extrae la información real de la tabla 'purchase_details' y hace JOIN con productos
+   
     public List<PurchaseDetail> listPurchaseDetailQuery(int id) {
         List<PurchaseDetail> listDetails = new ArrayList<>();
        String query = "SELECT det.id, "
              + "det.purchase_id, "
-             + "det.product_id AS product_code, " // <-- Corregido
-             + "prod.name AS product_name, "     // <-- Corregido
-             + "det.purchase_amount AS quantity, " // <-- Corregido
-             + "det.purchase_price AS price, "    // <-- Corregido
-             + "det.purchase_subtotal AS subtotal " // <-- Corregido
+             + "det.product_id AS product_code, " 
+             + "prod.name AS product_name, "    
+             + "det.purchase_amount AS quantity, "
+             + "det.purchase_price AS price, "    
+             + "det.purchase_subtotal AS subtotal " 
              + "FROM purchase_details det "
              + "INNER JOIN products prod ON det.product_id = prod.id "
              + "WHERE det.purchase_id = ?";

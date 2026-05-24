@@ -166,7 +166,7 @@ public class EmployeesController implements ActionListener, MouseListener, KeyLi
         for (Employees emp : list) {
             Object[] row = new Object[8];
             row[0] = emp.getId();
-            row[1] = emp.getIdCard(); // Agregado a la grilla visual de la tabla
+            row[1] = emp.getIdCard(); 
             row[2] = emp.getFullName();
             row[3] = emp.getUsername();
             row[4] = emp.getAddress();

@@ -2,20 +2,20 @@ package Models;
 
 public class Sales {
     private int id;
-    private int customerId;      // camelCase profesional
-    private int employeeId;      // camelCase profesional
-    private double totalToPay;   // double primitivo y camelCase para el monto total
-    private String saleDate;     // Fecha de la transacción
+    private int customerId;     
+    private int employeeId;      
+    private double totalToPay;   
+    private String saleDate;     
     
-    // Atributos extendidos útiles para los JOINs y visualización en tablas
-    private String customerName; // camelCase profesional
-    private String employeeName; // camelCase profesional
+   
+    private String customerName;
+    private String employeeName; 
 
-    // Constructor vacío obligatorio
+
     public Sales() {
     }
 
-    // Constructor completo optimizado
+
     public Sales(int id, int customerId, int employeeId, double totalToPay, String saleDate, String customerName, String employeeName) {
         this.id = id;
         this.customerId = customerId;

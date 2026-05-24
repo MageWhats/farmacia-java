@@ -31,7 +31,7 @@ public class CategoriesController implements ActionListener, MouseListener, KeyL
         this.views.btn_category_delete.addActionListener(this);   
         this.views.btn_category_cancel.addActionListener(this);   
 
-        // Barra de búsqueda e interactividad con la grilla
+        
         this.views.txt_category_search.addKeyListener(this);
         this.views.tb_category.addMouseListener(this);
         this.views.jLabelCategories.addMouseListener(this);
@@ -148,7 +148,7 @@ public class CategoriesController implements ActionListener, MouseListener, KeyL
                 views.btn_category_register.setEnabled(false);
             }
         } else if (e.getSource() == views.jLabelCategories) {
-            views.jTabbedPane1.setSelectedIndex(6); // Ajusta según el índice numérico correspondiente en tus pestañas laterales
+            views.jTabbedPane1.setSelectedIndex(6); 
             listAllCategories();
         }
     }

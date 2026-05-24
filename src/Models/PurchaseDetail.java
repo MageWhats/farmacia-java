@@ -2,15 +2,15 @@ package Models;
 
 public class PurchaseDetail {
     // 1. Atributos alineados a la tabla intermedia y a tu vista
-    private int id;             // Llave primaria autoincremental de la tabla de detalle
-    private int purchaseId;     // Llave foránea que amarra el detalle con la tabla 'purchases'
-    private int productCode;    // Código único del producto (Columna 'Cod Producto' o 'Id' en la vista)
-    private String productName; // Nombre del producto (Sirve para pintar datos en el JTable de forma temporal)
-    private int quantity;       // Cantidad comprada
-    private double price;       // Precio de compra unitario
-    private double subtotal;    // Subtotal de la fila (precio * cantidad)
+    private int id;             
+    private int purchaseId;     
+    private int productCode;    
+    private String productName; 
+    private int quantity;       
+    private double price;      
+    private double subtotal;    
 
-    // 2. Constructor vacío por defecto
+  
     public PurchaseDetail() {
     }
 
@@ -25,7 +25,7 @@ public class PurchaseDetail {
         this.subtotal = subtotal;
     }
 
-    // 4. Métodos Getters y Setters limpios
+ 
     public int getId() {
         return id;
     }

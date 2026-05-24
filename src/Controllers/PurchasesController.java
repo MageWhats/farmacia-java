@@ -5,7 +5,6 @@ import Models.ProductDao;
 import Models.Products;
 import Models.PurchasesDao;
 import Models.Suppliers;
-import Models.SuppliersDao;
 import Views.SystemView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,7 +25,7 @@ public class PurchasesController implements ActionListener, MouseListener {
     private final ProductDao productDao;
     private final SystemView views;
 
-    // Modelo para controlar el carrito de compras en tu JTable
+    
     private List<PurchaseDetail> carList = new ArrayList<>();
 
     private DefaultTableModel tempModel;
@@ -47,7 +46,7 @@ public class PurchasesController implements ActionListener, MouseListener {
         // Escuchador para buscar al dar ENTER en la caja de código de producto
         this.views.txt_purchase_productCode.addActionListener(this);
 
-        // ¡Mejora!: Carga los proveedores apenas arranca la pantalla
+      
         cargarSupplierPurchase();
         calcularSubtotalDinamico();
 
@@ -78,13 +77,13 @@ public class PurchasesController implements ActionListener, MouseListener {
                     String qtyStr = views.txt_purchase_quantity.getText().trim();
                     String priceStr = views.txt_purchase_price.getText().trim();
 
-                    // Si ambos campos tienen números, calculamos de inmediato
+                   
                     if (!qtyStr.isEmpty() && !priceStr.isEmpty()) {
                         int qty = Integer.parseInt(qtyStr);
                         double price = Double.parseDouble(priceStr);
                         double subtotal = qty * price;
 
-                        // Pintar el resultado en el campo gris de la interfaz
+                       
                         views.txt_purchase_subtotal.setText(String.valueOf(subtotal));
                     } else {
                         views.txt_purchase_subtotal.setText(""); // Limpiar si borran los datos
@@ -139,7 +138,7 @@ public class PurchasesController implements ActionListener, MouseListener {
             DynamicCb supplierCb = (DynamicCb) views.cb_purchase_supplier.getSelectedItem();
             String supplierName = supplierCb.getName();
 
-            // Lógica Limpia: Cálculo del Subtotal de la fila
+          
             double subTotal = qty * price;
             views.txt_purchase_subtotal.setText(String.valueOf(subTotal));
 

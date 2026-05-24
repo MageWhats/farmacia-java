@@ -2,7 +2,7 @@ package Controllers;
 
 import Models.CategoriesDao;
 import Models.DynamicCb;
-import Models.EmployeesDao;
+
 import static Models.EmployeesDao.rol_user;
 import Models.ProductDao;
 import Models.Products;
@@ -57,7 +57,7 @@ public class ProductsController implements ActionListener, MouseListener, KeyLis
         }
     }
 
-    // Lógica de registro aislada y segura
+
     private void executeRegister() {
         if (areFieldsEmpty()) {
             JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios", "Advertencia", JOptionPane.WARNING_MESSAGE);
@@ -91,7 +91,7 @@ public class ProductsController implements ActionListener, MouseListener, KeyLis
         }
     }
 
-    // Lógica de actualización aislada y segura
+
     private void executeUpdate() {
         if (views.txt_product_id.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Selecciona una fila de la tabla para continuar", "Información", JOptionPane.INFORMATION_MESSAGE);
@@ -128,7 +128,7 @@ public class ProductsController implements ActionListener, MouseListener, KeyLis
         }
     }
 
-    // Lógica de eliminación aislada
+
     private void executeDelete() {
         int row = views.tb_product.getSelectedRow();
         if (row == -1) {
@@ -151,7 +151,7 @@ public class ProductsController implements ActionListener, MouseListener, KeyLis
         }
     }
 
-    // Centralizador para verificar si hay campos vacíos (Evita repetir código)
+   
     private boolean areFieldsEmpty() {
         return views.txt_product_code.getText().trim().isEmpty()
                 || views.txt_product_name.getText().trim().isEmpty()
@@ -161,7 +161,6 @@ public class ProductsController implements ActionListener, MouseListener, KeyLis
                 || views.cb_product_category.getSelectedItem().toString().trim().isEmpty();
     }
 
-    // Limpiar Campos
     public void cleanFields() {
         views.txt_product_id.setText("");
         views.txt_product_code.setText("");
@@ -173,14 +172,14 @@ public class ProductsController implements ActionListener, MouseListener, KeyLis
         }
     }
 
-    // Listar todos los productos filtrados u ordenados
+
     public void listAllProducts() {
         if (rol.equals("Administrador") || rol.equals("Auxiliar")) {
             List<Products> list = productDao.listProductsQuery(views.txt_product_search.getText().trim());
             model = (DefaultTableModel) views.tb_product.getModel();
-            model.setRowCount(0); // Limpia la tabla eficientemente sin métodos externos redundantes
+            model.setRowCount(0); 
 
-            // Uso de For-Each moderno
+           
             for (Products prod : list) {
                 Object[] row = new Object[7];
                 row[0] = prod.getId();
@@ -194,7 +193,7 @@ public class ProductsController implements ActionListener, MouseListener, KeyLis
             }
             views.tb_product.setModel(model);
 
-            // Control de restricciones para rol Auxiliar
+          
             if (rol.equals("Auxiliar")) {
                 views.btn_product_register.setEnabled(false);
                 views.btn_product_update.setEnabled(false);
@@ -209,28 +208,28 @@ public class ProductsController implements ActionListener, MouseListener, KeyLis
         }
     }
 
-    // Coloca este método profesional al final de tu ProductsController.java
+
     public void cargarCategoriesProducts() {
-        // 1. Instanciamos el DAO de categorías para consultar la base de datos
+       
         CategoriesDao categoryDao = new Models.CategoriesDao();
 
-        // 2. Limpiamos el ComboBox de la interfaz visual para vaciar elementos antiguos
+      
         views.cb_product_category.removeAllItems();
 
-        // 3. Traemos la lista fresca de categorías directamente de MySQL (enviando "" para traerlas todas)
+   
         List<Models.Categories> listaCategorias = categoryDao.listCategoriesQuery("");
 
-        // 4. Recorremos la lista con un bucle For-Each moderno
+       
         for (Models.Categories cat : listaCategorias) {
-            // Envolvemos el ID y el Nombre de la categoría dentro de tu objeto DynamicCb
+            
             DynamicCb itemCombo = new DynamicCb(cat.getId(), cat.getName());
 
-            // Agregamos el objeto dinámico directamente al ComboBox de tu SystemView
+           
             views.cb_product_category.addItem(itemCombo);
         }
     }
 
-    // Implementaciones requeridas por las interfaces (MouseListener / KeyListener)
+
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getSource() == views.tb_product) {
@@ -242,13 +241,13 @@ public class ProductsController implements ActionListener, MouseListener, KeyLis
                 views.txt_product_description.setText(views.tb_product.getValueAt(row, 3).toString());
                 views.txt_product_price_sale.setText(views.tb_product.getValueAt(row, 4).toString());
 
-                // Deshabilitar botón de registro al seleccionar una fila para modificar
+                
                 if (!rol.equals("Auxiliar")) {
                     views.btn_product_register.setEnabled(false);
                 }
             }
         } else if (e.getSource() == views.jLabelProducts) {
-            views.jTabbedPane1.setSelectedIndex(0); // Reemplaza por el índice correcto de tu pestaña de productos
+            views.jTabbedPane1.setSelectedIndex(0); 
             listAllProducts();
             cargarCategoriesProducts();
             
@@ -274,7 +273,7 @@ public class ProductsController implements ActionListener, MouseListener, KeyLis
     @Override
     public void keyReleased(KeyEvent e) {
         if (e.getSource() == views.txt_product_search) {
-            listAllProducts(); // Busca dinámicamente mientras el usuario escribe
+            listAllProducts();
         }
     }
 

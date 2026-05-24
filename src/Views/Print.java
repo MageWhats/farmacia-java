@@ -14,7 +14,7 @@ import Models.PurchaseDetail;
 
 public class Print extends javax.swing.JFrame {
 
-   // Instancia limpia para conectar con MySQL
+
     private final PurchasesDao purchaseDao = new PurchasesDao();
     private DefaultTableModel model = new DefaultTableModel();
 
@@ -30,28 +30,28 @@ public class Print extends javax.swing.JFrame {
                 // Muestra el ID de la boleta en la esquina superior derecha
         txt_print_invoice.setText(String.valueOf(id));
         
-        // Carga y calcula de forma segura usando la nueva arquitectura limpia
+       
         listAllPurchaseDetails(id, purchaseSelected);
         calculatePurchase();
 
     }
 
-    // Método corregido con For-Each moderno y nombres en CamelCase obligatorios
+  
     public void listAllPurchaseDetails(int id, Purchases purchaseSelected) {
         List<PurchaseDetail> list = purchaseDao.listPurchaseDetailQuery(id);
         model = (DefaultTableModel) tb_print_purchases_detail.getModel();
-        model.setRowCount(0); // Limpieza rápida de filas antiguas
+        model.setRowCount(0); 
 
-        // Ciclo de alta velocidad sincronizado con tu Purchases.java refactorizado
+      
         for (PurchaseDetail det : list) {
             Object[] row = new Object[7];
-            row[0] = det.getProductName();     // Sincronizado: getProduct_name ➔ getProductName
-            row[1] = det.getQuantity(); // Sincronizado: getPurchase_amount ➔ getPurchaseQuantity
-            row[2] = det.getPrice();        // Sincronizado: getPurchase_price ➔ getUnitPrice
-            row[3] = det.getSubtotal();            // Sincronizado: getPurchase_subtotal ➔ getTotal
-            row[4] = purchaseSelected.getSupplierName();     // Sincronizado: getSupplier_name_product ➔ getSupplierName
-            row[5] = purchaseSelected.getEmployeeName();     // Sincronizado: getPurchase ➔ getEmployeeName
-            row[6] = purchaseSelected.getCreated();          // Sincronizado
+            row[0] = det.getProductName();   
+            row[1] = det.getQuantity(); 
+            row[2] = det.getPrice();       
+            row[3] = det.getSubtotal();            
+            row[4] = purchaseSelected.getSupplierName();     
+            row[5] = purchaseSelected.getEmployeeName();     
+            row[6] = purchaseSelected.getCreated();          
             model.addRow(row);
         }
         tb_print_purchases_detail.setModel(model);
@@ -172,10 +172,10 @@ public class Print extends javax.swing.JFrame {
 try {
             Toolkit tk = this.getToolkit();
             
-            // Lanza el cuadro de diálogo del sistema operativo (Windows/Mac) para elegir impresora
+          
             PrintJob pj = tk.getPrintJob(this, "Factura de Compra - " + txt_print_invoice.getText(), null);
             
-            // ¡Seguridad Senior!: Si el usuario cancela la ventana de impresión, salimos limpiamente sin romper nada
+           
             if (pj == null) {
                 return; 
             }
@@ -183,9 +183,9 @@ try {
             Graphics graphics = pj.getGraphics();
             
             if (graphics != null) {
-                form_print.print(graphics); // Captura y dibuja estrictamente el contenedor 'form_print'
-                graphics.dispose();         // Libera memoria gráfica de inmediato
-                pj.end();                   // Envía el documento a la cola física de impresión
+                form_print.print(graphics); 
+                graphics.dispose();        
+                pj.end();                
             }
             
         } catch (Exception e) {

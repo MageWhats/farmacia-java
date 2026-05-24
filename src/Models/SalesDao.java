@@ -14,7 +14,7 @@ public class SalesDao {
 
     private final ConnectionMySQL cn = new ConnectionMySQL();
 
-    // 1. Registrar el encabezado de la venta (La Factura General)
+  
     public boolean registerSaleQuery(Sales sale) {
         String query = "INSERT INTO sales (customer_id, employee_id, total, sale_date) VALUES (?, ?, ?, ?)";
         Timestamp dateTime = new Timestamp(new Date().getTime());

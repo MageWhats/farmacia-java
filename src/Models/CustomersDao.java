@@ -15,7 +15,7 @@ public class CustomersDao {
 
     private final ConnectionMySQL cn = new ConnectionMySQL();
 
-    // 1. Registrar: Usando 'full_name' idéntico a MySQL
+
     public boolean registerCustomerQuery(Customers customer) {
         String query = "INSERT INTO customers (id, full_name, address, telephone, email, created, updated) VALUES (?, ?, ?, ?, ?, ?, ?)";
         Timestamp dateTime = new Timestamp(new Date().getTime());
@@ -98,9 +98,9 @@ public class CustomersDao {
             pst.setInt(1, id);
             pst.execute();
             return true;
-            // Modifica el catch de tu deleteCustomerQuery en CustomersDao.java
+          
         } catch (SQLException e) {
-            if (e.getErrorCode() == 1451) { // 1451 es el código de error de Foreign Key en MySQL
+            if (e.getErrorCode() == 1451) { 
                 JOptionPane.showMessageDialog(null,
                         "No se puede eliminar este cliente porque tiene facturas de ventas asociadas en el historial.",
                         "Restricción de Seguridad", JOptionPane.WARNING_MESSAGE);
@@ -134,7 +134,7 @@ public class CustomersDao {
     private Customers mapResultSetToCustomer(ResultSet rs) throws SQLException {
         Customers customer = new Customers();
         customer.setId(rs.getInt("id"));
-        customer.setFullName(rs.getString("full_name")); // ¡Corregido aquí para coincidir con MySQL!
+        customer.setFullName(rs.getString("full_name")); 
         customer.setAddress(rs.getString("address"));
         customer.setTelephone(rs.getString("telephone"));
         customer.setEmail(rs.getString("email"));

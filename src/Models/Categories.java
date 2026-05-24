@@ -3,11 +3,11 @@ package Models;
 
 public class Categories {
     private int id;
-    private String name;         // Nombre de la categoría (ej. Antibióticos)
-    private String created;      // Fecha de creación en MySQL
-    private String updated;      // Fecha de última modificación
+    private String name;         
+    private String created;     
+    private String updated;      
 
-    // Constructor vacío obligatorio para frameworks y manipulación limpia
+  
     public Categories() {
     }
 

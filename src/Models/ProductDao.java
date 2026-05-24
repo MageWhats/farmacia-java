@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 
 public class ProductDao {
 
-    // Único atributo global limpio para obtener conexiones bajo demanda
+    
     private final ConnectionMySQL cn = new ConnectionMySQL();
 
     // Registrar Productos
@@ -20,7 +20,7 @@ public class ProductDao {
         String query = "INSERT INTO products(code, name, description, unit_price, created, updated, category_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
         Timestamp dateTime = new Timestamp(new Date().getTime());
         
-        // Try-with-resources: la conexión y el comando se cierran solos automáticamente
+     
         try (Connection conn = cn.getConnection();
              PreparedStatement pst = conn.prepareStatement(query)) {
             
@@ -44,7 +44,7 @@ public class ProductDao {
     public List<Products> listProductsQuery(String value) {
         List<Products> listProducts = new ArrayList<>();
         
-        // Consultas optimizadas con INNER JOIN
+       
         String query = "SELECT pro.*, ca.name AS category_name FROM products pro "
                      + "INNER JOIN categories ca ON pro.category_id = ca.id";
         
@@ -101,7 +101,7 @@ public class ProductDao {
         }
     }
 
-    // Eliminar Productos (Blindado contra SQL Injection)
+    // Eliminar Productos 
     public boolean deleteProductQuery(int id) {
         String query = "DELETE FROM products WHERE id = ?";
         
@@ -138,7 +138,7 @@ public class ProductDao {
         return product;
     }
 
-    // Buscar Producto por Código de Barras
+ 
     public Products searchCode(int code) {
         String query = "SELECT id, name, unit_price, product_quantity FROM products WHERE code = ?";
         Products product = new Products();
@@ -198,9 +198,7 @@ public class ProductDao {
         }
     }
 
-    /**
-     * Mapeo DRY (Don't Repeat Yourself) para evitar repetir la asignación de campos repetidas veces
-     */
+ 
     private Products mapResultSetToProduct(ResultSet rs) throws SQLException {
         Products product = new Products();
         product.setId(rs.getInt("id"));

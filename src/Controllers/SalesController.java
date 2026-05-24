@@ -36,10 +36,10 @@ public class SalesController implements ActionListener, KeyListener, MouseListen
         this.customerDao = customerDao;
 
         // Escuchadores de botones de tu interfaz gráfica para ventas
-        this.views.btn_sale_add.addActionListener(this);       // Botón "Agregar" (al carrito)
-        this.views.btn_sale_generate.addActionListener(this);  // Botón "Generar Venta" / "Vender"
-        this.views.btn_sale_delete.addActionListener(this);    // Botón "Eliminar" (fila del carrito)
-        this.views.btn_sale_new.addActionListener(this);       // Botón "Nuevo" / "Limpiar"
+        this.views.btn_sale_add.addActionListener(this);      
+        this.views.btn_sale_generate.addActionListener(this);  
+        this.views.btn_sale_delete.addActionListener(this);    
+        this.views.btn_sale_new.addActionListener(this);       
         
         // Escuchador para cargar datos al presionar ENTER en el código del medicamento
         this.views.txt_sale_productCode.addActionListener(this);
@@ -106,7 +106,7 @@ public class SalesController implements ActionListener, KeyListener, MouseListen
         }
     }
 
-    // 2. Botón "Agregar": Valida inventarios reales en caliente y monta la línea en el JTable
+ 
     private void addProductToCart() {
         if (areFieldsEmpty()) {
             JOptionPane.showMessageDialog(null, "Por favor complete todos los datos del medicamento.", "Campos Vacíos", JOptionPane.WARNING_MESSAGE);
@@ -121,17 +121,17 @@ public class SalesController implements ActionListener, KeyListener, MouseListen
             int currentStock = Integer.parseInt(views.txt_sale_stock.getText().trim());
             String nameCustomer = views.txt_sale_nameCustomer.getText().trim();
 
-            // ¡Mejora Crítica de Farmacia!: Detener la operación si no hay suficiente medicina
+          
             if (qty > currentStock) {
                 JOptionPane.showMessageDialog(null, "Stock insuficiente. Solo quedan " + currentStock + " unidades disponibles.", "Inventario Agotado", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            // Cálculo en caliente del Subtotal
+           
             double subTotal = qty * price;
 
             tempModel = (DefaultTableModel) views.tb_sale.getModel();
-            // Insertar fila temporal en la rejilla visual (Id, Nombre, Cantidad, Precio, SubTotal)
+          
             Object[] row = new Object[6];
             row[0] = id;
             row[1] = name;

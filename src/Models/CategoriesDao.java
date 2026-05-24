@@ -100,9 +100,7 @@ public class CategoriesDao {
         }
     }
 
-    /**
-     * Mapeador DRY Centralizado: Convierte filas de MySQL en objetos encapsulados de Java
-     */
+  
     private Categories mapResultSetToCategory(ResultSet rs) throws SQLException {
         Categories category = new Categories();
         category.setId(rs.getInt("id"));
